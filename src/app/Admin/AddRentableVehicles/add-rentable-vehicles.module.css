@@ -1,0 +1,244 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(20, 114, 222, 0.429);
+    border-radius: 30px;
+    min-width: 90%;
+    align-items: center;
+    
+}
+
+.container:hover{
+    border: 1px solid rgba(20, 114, 222, 0.644);
+    box-shadow: -11px 12px 15px 4px rgba(29, 37, 46, 0.482);
+}
+
+.header{
+    margin-top: 30px;
+}
+
+.form{
+    margin-top: 20px;
+    min-width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+}
+
+.inputfields {
+    color: black; 
+    background-color: rgba(255, 255, 255, 1);
+    max-width: 100%;
+    min-width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.5); 
+    padding: 10px; 
+}
+
+.inputfields:focus {
+    outline: none; /* Remove default outline */
+    border: 2px solid #007BFF; /* Highlight border on focus */
+}
+
+.inputfields::placeholder {
+    color: #ffffff;
+    opacity: 0.3; /* Make sure the placeholder color is not faded (optional) */
+  }
+
+.description{
+    color: black; 
+    background-color: rgba(255, 255, 255, 1);
+    max-width: 100%;
+    min-width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.5); 
+    padding: 10px; 
+    min-height: 100px;
+    max-width: 300px;
+    max-height: 150px;
+}
+
+.description:focus {
+    outline: none; /* Remove default outline */
+    border: 2px solid #007BFF; /* Highlight border on focus */
+}
+
+.description::placeholder {
+    color: #aaa; /* Light gray color for the placeholder */
+    opacity: 1;  /* Full opacity */
+}
+
+.priceContainer {
+    position: relative; /* Position relative for positioning currency symbol */
+  }
+
+  .currencySymbol {
+    position: absolute;
+    color: black;
+    left: 10px; /* Adjust based on your design */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for better vertical alignment */
+    font-size: 16px; /* Adjust size as needed */
+  }
+
+.price{
+    color: black; 
+    background-color: rgba(255, 255, 255, 1);
+    max-width: 100%;
+    min-width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.5); 
+    padding-left: 40px;
+}
+
+.price::placeholder {
+    color: #aaa; /* Light gray color for the placeholder */
+    opacity: 1;  /* Full opacity */
+    /* padding-left: 10px; */
+}
+
+.price:focus {
+    outline: none; /* Remove default outline */
+    border: 2px solid #007BFF; /* Highlight border on focus */
+}
+
+.quantity{
+    color: black; 
+    background-color: rgba(255, 255, 255, 1);
+    max-width: 100%;
+    min-width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.5); 
+    padding-left: 10px;
+}
+
+.quantity:focus {
+    outline: none; 
+    border: 2px solid #007BFF; /* Highlight border on focus */
+}
+
+.quantity::placeholder {
+    color: #aaa; /* Light gray color for the placeholder */
+    opacity: 1;  /* Full opacity */
+    /* padding-left: 10px; */
+}
+
+.submitbutton{
+    width: 20%;
+    padding: 10px;
+    margin: 10px;
+    background-color: #6367b46f;
+    border-color: rgba(255, 255, 255, 0.158);
+    border-radius: 10px;
+
+}
+
+.suggestions {
+    position: absolute;
+    color: black;
+    margin-left:10px ;
+    background-color: rgba(255, 255, 255, 0.217);
+    border: 1px solid #ccc;
+    list-style: none;
+    max-height: 150px; /* Limit height of dropdown */
+    overflow-y: auto; /* Scroll if too many suggestions */
+    width: 25%; /* Match input field width */
+    z-index: 1000; /* Ensure it's on top */
+  }
+
+  .imagePicker {
+    margin: 0px 0;
+  }
+  
+  .addImageButton {
+    /* width: 20%; */
+    text-wrap: nowrap;
+    padding: 10px;
+    margin: 10px;
+    background-color: #6367b46f;
+    border-color: rgba(255, 255, 255, 0.158);
+    border-radius: 10px;
+  }
+
+  .addImageButton:hover{
+    background-color: #6367b4f1;
+    border-color: rgba(255, 255, 255, 0.283);
+  }
+  
+  
+  .suggestionItem {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .suggestionItem:hover {
+    background-color: #f0f0f0; /* Highlight on hover */
+  }
+
+.submitbutton:hover{
+    width: 22%;
+    padding: 10px;
+    margin: 10px;
+    background-color: #6367b455;
+    border-color: rgba(255, 255, 255, 0.158);
+    box-shadow: 11px 12px 15px 4px rgba(29, 37, 46, 0.482);
+}
+
+
+.quantityContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .quantityButton {
+    text-wrap: nowrap;
+    padding: 10px;
+    margin: 10px;
+    background-color: #6367b46f;
+    border-color: rgba(255, 255, 255, 0.158);
+    border-radius: 10px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .quantityButton:hover {
+    background-color: #45a049;
+  }
+
+  .quantityButtonMinus {
+    text-wrap: nowrap;
+    padding: 10px;
+    margin: 10px;
+    background-color: #6367b46f;
+    border-color: rgba(255, 255, 255, 0.158);
+    border-radius: 10px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .quantityButtonMinus:hover {
+    background-color: #c0453e;
+  }
+  
+  .quantityDisplay {
+    text-align: center;
+    border: 1px solid #ddd;
+    color: black; 
+    background-color: rgba(255, 255, 255, 1);
+    max-width: 60%;
+    min-width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.5); 
+    padding-left: 10px;
+  }
+
+  .quantityDisplay{
+    outline: none; 
+    border: 2px solid #007BFF; 
+  }
+

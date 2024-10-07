@@ -1,0 +1,142 @@
+
+.howitworks{
+    border: 2px solid rgb(255, 255, 255);
+}
+
+.headinglabel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1572D3;
+}
+
+.heading{
+    font-weight: 500;
+    font-size: 15px;
+    background-color: rgba(21, 114, 211, 0.18);
+    border-color: black;
+    border-radius: 10px;
+    padding: 10px 32px;
+}
+
+.labelstepsdiv{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.stepsbox{
+    align-items: center;
+    justify-content: center;
+    max-width:180px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+.labelsteps{
+    color: #343131;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+}
+
+/* Style for the steps boxes */
+.steps{
+    margin: 0px 70px ;
+    margin-top:45px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.steps img{
+    width: 120px;
+    padding: 30px;
+    background: rgba(236, 245, 255, 1);
+    border-radius: 15px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.headtext{
+    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: rgb(57, 54, 54);
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.spantext{
+    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: rgb(95, 95, 95);
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    margin-top: 90px;
+    padding: 10px 0;
+    background-color: #f0f0f000;
+
+  }
+  
+  .marqueeInner {
+    display: inline-flex;
+    animation: scroll 30s linear infinite; /* Adjust speed by changing 20s */
+  }
+  
+  .marqueeInner img {
+    margin: 0 45px; /* Adjust spacing between icons */
+  }
+  
+  @keyframes scroll {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+/* Mobile view */
+@media only screen and (max-width: 786px) {
+
+    .howitworks{
+        font-size: 18px;
+    }
+    .heading{
+        font-size: 13px;
+    }
+
+    .labelstepsdiv{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .labelsteps{
+        font-size: 25px;
+    }
+
+    .steps{
+        display: flex;
+        flex-direction: column;
+        margin-top: 60px;
+    }
+
+    .stepsbox{
+        margin: 20px 0px ;
+    }
+}

@@ -1,0 +1,108 @@
+.login {
+    position: relative; /* Necessary to position the ::before pseudo-element */
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    background-color: #051C34; /* Fallback background color */
+    background-image: url('/banners/backgroundbmw2.png'); /* Path to your background image */
+    background-size: contain; /* Control image size */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* No repeat */
+    display: flex; /* For inner content alignment */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    z-index: 1; /* Ensure the element is below the mask */
+  }
+  
+  .login::before {
+    content: ''; /* Required to create the pseudo-element */
+    position: absolute; /* Absolute position to cover the entire container */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1; /* Place the mask below the content but above the background */
+    pointer-events: none; /* Ensure the mask doesn't interfere with clicking */
+  }
+  
+
+  .loginform{
+    width: 500px;
+    height: 70%;
+    background-color: rgba(30, 29, 29, 0.836);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cardcarimagecontainer{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    padding-top: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+  .logintext{
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: 800;
+    color: #b2b2b393;
+  }
+.inputfields{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 80%;
+  align-items: center;
+}
+
+.emailinput{
+  width: 70%;
+  height: 40px;
+  color: black;
+  background-color: rgba(240, 248, 255, 0.966);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+
+.passwordinput{
+  width: 70%;
+  height: 40px;
+  background-color: rgba(240, 248, 255, 0.966);
+  color: black;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.loginbutton{
+  width: 40%;
+  padding: 10px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: rgb(29, 135, 234, 0.8);
+  border: none;
+}
+.loginbutton:hover{
+  background-color: rgb(29, 135, 234);
+}
+
+.registertext{
+  font-size: 12px;
+}
+
+.registerlink{
+  margin-top: -20px;
+  color: blue;
+  cursor: pointer;
+}
+
+.isadmin{
+  font-size: 10px;
+  margin-top: -10px;
+  color: rgb(71, 71, 71);
+  cursor: pointer;
+}
+  

@@ -1,0 +1,118 @@
+.banner {
+    padding-top: 5%;
+    display: flex;
+    justify-content: row;
+  }
+  
+  .left {
+    margin-left: 190px;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+
+.headinglabel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1572D3;
+}
+
+.whychooseustext {
+    margin-top: 20px;
+    width: 100%;  
+    height: auto;  
+    max-width: 350px; 
+    max-height: 350px; 
+  }
+
+.heading{
+    font-weight: 500;
+    font-size: 12px;
+    background-color: rgba(21, 114, 211, 0.18);
+    border-color: black;
+    border-radius: 10px;
+    padding: 10px 32px;
+    text-wrap: nowrap;
+}
+
+.subheading{
+    margin-top: 10px;
+    justify-content: center;
+    text-align: justify;
+    align-items: center;
+    margin-right:20px ;
+}
+.subheadingtext{
+    color: rgb(74, 73, 73);
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+  
+  .right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  #whychooseusCarImage {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100%;  /* Set the width of the container to 100% */
+  }
+  
+  .whychooseusCarImage {
+    width: 100%;  
+    height: auto;  
+    max-width: 800px; 
+    max-height: 800px; 
+  }
+
+  .storeButtons{
+    max-width: 120px; 
+    max-height: 120px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    cursor: pointer;
+  }
+  
+  .welcometext{
+    width: 100%;  
+    height: auto;  
+    max-width: 300px; 
+    max-height: 300px; 
+  }
+
+/* Mobile view */
+@media only screen and (max-width: 786px) {
+    
+    .banner{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }  
+    
+    .left{
+        margin-left: 10px;
+        margin-right: 10px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+      #welcomeCarImage {
+        margin-top: 10px;
+        display: flex;
+        width: 100%;  /* Set the width of the container to 100% */
+      }
+
+      .storeButtons{
+        width: 90px;
+        display: flex;
+    }
+} 
+

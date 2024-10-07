@@ -1,0 +1,84 @@
+.banner {
+    padding-top: 5%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .left {
+    margin-left: 190px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+
+  }
+
+  
+  .right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  #welcomeCarImage {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100%;  /* Set the width of the container to 100% */
+  }
+  
+  .welcomeCarImage {
+    width: 100%;  
+    height: auto;  
+    max-width: 800px; 
+    max-height: 800px; 
+  }
+
+  .storeButtons{
+    max-width: 120px; 
+    max-height: 120px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    cursor: pointer;
+  }
+  
+  .welcometext{
+    width: 100%;  
+    height: auto;  
+    max-width: 300px; 
+    max-height: 300px; 
+  }
+
+/* Mobile view */
+@media only screen and (max-width: 786px) {
+    
+    .banner{
+        /* border: 2px solid red; */
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }  
+    
+    .left{
+        margin-left: 10px;
+        margin-right: 10px;
+        justify-content: center;
+        /* border: 2px solid red; */
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+      #welcomeCarImage {
+        margin-top: 10px;
+        display: flex;
+        width: 100%;  /* Set the width of the container to 100% */
+      }
+
+      .storeButtons{
+        width: 90px;
+        display: flex;
+        /* flex-direction: column; */
+    }
+} 
+
