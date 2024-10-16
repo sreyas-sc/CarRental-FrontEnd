@@ -5,6 +5,7 @@ import styles from './add-rentable-vehicles.module.css';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { ADD_RENTABLE_VEHICLE_MUTATION, GET_ALL_MAKES, GET_MODELS_BY_MAKE } from '@/graphql/mutations';
 import Swal from 'sweetalert2';
+import { Variable } from 'lucide-react';
 
 const AddRentableVehicles: React.FC = () => {
   const [makes, setMakes] = useState<string[]>([]);
@@ -46,12 +47,6 @@ const AddRentableVehicles: React.FC = () => {
     }
   }, [selectedMake, getModels]);
 
-  const handlePrimaryImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setPrimaryImage(e.target.files[0]);
-    }
-  };
-
   const handleAdditionalImageChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
@@ -61,18 +56,19 @@ const AddRentableVehicles: React.FC = () => {
     }
   };
 
+  const handlePrimaryImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setPrimaryImage(file);
+  };
+
+  const handleAdditionalImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    setAdditionalImages(files);
+  };
+
+
   const handleAddVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Log all the values to check for missing fields
-    console.log("Selected Make:", selectedMake);
-    console.log("Selected Model:", selectedModel);
-    console.log("Selected Year:", selectedYear);
-    console.log("Price:", price);
-    console.log("Quantity:", quantity);
-    console.log("Description:", description);
-    console.log("Primary Image:", primaryImage);
-    console.log("Additional Images:", additionalImages);
 
     // Basic validation
     if (!selectedMake || !selectedModel || !selectedYear || price <= 0 || quantity <= 0) {
@@ -80,59 +76,37 @@ const AddRentableVehicles: React.FC = () => {
       return;
     }
 
-    // Create input object for mutation
-    const input = {
-      make: selectedMake,
-      model: selectedModel,
-      year: selectedYear,
-      price,
-      quantity,
-      availability,
-      description,
-      transmission: selectedTransmission,
-      fuelType: selectedFuelType,
-      seats,
-      primaryImage, // Primary image file object
-      additionalImages, // Array of additional image file objects
-    };
-
     try {
-      // Submit the form data
+      console.log(selectedMake);
       const { data } = await addRentableVehicle({
         variables: {
-          make: input.make,
-          model: input.model,
-          year: input.year,
-          price: input.price,
-          quantity: input.quantity,
-          availability : input.quantity,
-          description: input.description,
-          transmission: input.transmission,
-          fuel_type: input.fuelType,
-          _seats: input.seats,
-          get seats() {
-            return this._seats;
+          input: {
+            make: selectedMake,
+            model: selectedModel,
+            year: selectedYear,
+            price: price,
+            quantity: quantity,
+            availability: availability,
+            transmission: selectedTransmission,
+            fuel_type: selectedFuelType,
+            seats: seats,
+            description: description,
           },
-          set seats(value) {
-            this._seats = value;
-          },
-          primaryImage: input.primaryImage,
-          additionalImages: input.additionalImages,
+          primaryImage: primaryImage,
+          additionalImages: additionalImages,
         },
       });
 
-      // Log the response
       console.log("Vehicle Added:", data);
-      // alert('Vehicle added successfully! ');
-
-      Swal.fire('Vehicle Added Successfully!', data, 'success');
-        
+      // Reset form or navigate away as needed
+      Swal.fire('Vehicle Added Successfully!', '', 'success');
     } catch (error) {
-      Swal.fire('Error Adding Vehicle! 😕','error');
       console.error("Error Adding Vehicle:", error);
-      // alert('Failed to add the vehicle. Please try again.');
+      Swal.fire('Error Adding Vehicle!', '', 'error');
     }
   };
+
+
 
   const handleAddImageField = () => {
     setAdditionalImages([...additionalImages, new File([], '')]);
@@ -324,7 +298,7 @@ const AddRentableVehicles: React.FC = () => {
               <div className={styles.text} >
                 <span>Click to upload image</span>
                 </div>
-                <input type="file" id="file" accept="image/*" onChange={(e) => handleAdditionalImageChange(e, index)} />
+                <input type="file" id="file" accept="image/*" multiple onChange={handleAdditionalImagesChange} />
               </label>
 
               {/* <input type="file" accept="image/*" onChange={(e) => handleAdditionalImageChange(e, index)} /> */}

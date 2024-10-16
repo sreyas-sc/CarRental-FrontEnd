@@ -57,52 +57,31 @@ export const VERIFY_OTP_MUTATION = gql`
 
 // Admin mutation to add rentable vehicles 
 export const ADD_RENTABLE_VEHICLE_MUTATION = gql`
-    mutation AddRentableVehicle(
-        $make: String!
-        $model: String!
-        $year: String!
-        $price: Float!
-        $quantity: Int!
-        $availability: Int!
-        $transmission:  String!
-        $fuel_type: String!
-        $seats: Int!
-        $description: String
-        $primaryImage: Upload
-        $additionalImages: [Upload]
+  mutation AddRentableVehicle(
+    $input: vehicleInput!,
+    $primaryImage: Upload,
+    $additionalImages: [Upload]
+  ) {
+    addRentableVehicle(
+      input: $input,
+      primaryImage: $primaryImage,
+      additionalImages: $additionalImages
     ) {
-        addRentableVehicle(
-            input:{
-              make: $make
-              model: $model
-              year: $year
-              price: $price
-              quantity: $quantity
-              availability: $availability
-              transmission: $transmission
-              fuel_type: $fuel_type
-              seats:  $seats
-              description: $description
-              
-            }
-            primaryImage: $primaryImage
-            additionalImages: $additionalImages
-        ) {
-            id
-            make
-            model
-            year
-            price
-            quantity
-            availability
-            transmission
-            fuel_type
-            seats
-            description
-            primaryImageUrl
-            additionalImageUrls
-        }
+      id
+      make
+      model
+      year
+      price
+      quantity
+      availability
+      transmission
+      fuel_type
+      seats
+      description
+      primaryImageUrl
+      additionalImageUrls
     }
+  }
 `;
 
 // Add Bookings (user)
