@@ -119,9 +119,9 @@ const UserProfile: React.FC = () => {
           <span>Upload Image</span>
         </Upload>
       </Menu.Item>
-      <Menu.Item key="2" icon={<DeleteOutlined />} >
+      {/* <Menu.Item key="2" icon={<DeleteOutlined />} >
         <span>Delete Image</span>
-      </Menu.Item>
+      </Menu.Item> */}
     </Menu>
   );
 

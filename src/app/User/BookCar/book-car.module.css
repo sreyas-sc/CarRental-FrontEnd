@@ -1,12 +1,25 @@
 /* book-car.module.css */
 
 .bookingContainer {
-    max-width: 800px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 30px;
+    max-width: 90%;
     margin: 20px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.first{
+    width: 50%;
+    /* background-color: #005bb5; */
+}
+.second{
+    width: 50%;
+    align-items: center;
+    justify-content: center;
 }
 
 .title {
@@ -27,6 +40,30 @@
     height: auto;
     border-radius: 8px;
     margin-bottom: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.vehicleImage:hover {
+    transform: scale(1.05);
+}
+.imageSlider {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+.thumbnailImage {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+.thumbnailImage:hover {
+    opacity: 0.8;
 }
 
 .vehicleName {
@@ -117,10 +154,268 @@
     padding-left: 20px;
     padding-right: 20px;
     border-radius: 15px;
-    border: 1px solid rgb(152, 148, 148);
+    /* border-color: #000000; */
+    border: 1px solid rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    /* background-color: #000000c0; */
+
 }
+
+/* Button */
+/* From Uiverse.io by Admin12121 */ 
+
+.btnmain{
+    display: flex;
+    /* background-color: #005bb5; */
+    justify-content: center;
+    align-items: center;
+}
+.btncontainer {
+    background-color: #ffffff;
+    display: flex;
+    width: 360px;
+    /* max-width: fit-content; */
+    height: 120px;
+    position: relative;
+    border-radius: 6px;
+    transition: 0.3s ease-in-out;
+    border-color: #000000;
+  }
+  
+  .btncontainer:hover {
+    transform: scale(1.03);
+    width: 220px;
+  }
+  
+  .btncontainer:hover .btnleft_side {
+    width: 100%;
+  }
+  
+  .btnleft_side {
+    background-color: #5de2a3;
+    width: 100px;
+    height: 120px;
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  
+  .btnright_side {
+    width: calc(100% - 170px);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
+  
+  .btnright_side:hover {
+    background-color: #f9f7f9;
+  }
+  
+  .btnarrow {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+  }
+  
+  .btnnew {
+    font-size: 17px;
+    font-family: "Lexend Deca", sans-serif;
+    margin-left: 20px;
+    color: #494949;
+  }
+  
+  .btncard {
+    width: 70px;
+    height: 46px;
+    background-color: #c7ffbc;
+    border-radius: 6px;
+    position: absolute;
+    display: flex;
+    z-index: 10;
+    flex-direction: column;
+    align-items: center;
+    -webkit-box-shadow: 9px 9px 9px -2px rgba(77, 200, 143, 0.72);
+    -moz-box-shadow: 9px 9px 9px -2px rgba(77, 200, 143, 0.72);
+    -webkit-box-shadow: 9px 9px 9px -2px rgba(77, 200, 143, 0.72);
+  }
+  
+  .btncard_line {
+    width: 65px;
+    height: 13px;
+    background-color: #80ea69;
+    border-radius: 2px;
+    margin-top: 7px;
+  }
+  
+  @media only screen and (max-width: 480px) {
+    .btncontainer {
+      transform: scale(0.7);
+    }
+  
+    .btncontainer:hover {
+      transform: scale(0.74);
+    }
+  
+    .btnnew {
+      font-size: 18px;
+    }
+  }
+  
+  .btnbuttons {
+    width: 8px;
+    height: 8px;
+    background-color: #379e1f;
+    box-shadow: 0 -10px 0 0 #26850e, 0 10px 0 0 #56be3e;
+    border-radius: 50%;
+    margin-top: 5px;
+    transform: rotate(90deg);
+    margin: 10px 0 0 -30px;
+  }
+  
+  .btncontainer:hover .btncard {
+    animation: slide-top 1.2s cubic-bezier(0.645, 0.045, 0.355, 1) both;
+  }
+  
+  .btncontainer:hover .btnpost {
+    animation: slide-post 1s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  }
+  
+  @keyframes slide-top {
+    0% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+    }
+  
+    50% {
+      -webkit-transform: translateY(-70px) rotate(90deg);
+      transform: translateY(-70px) rotate(90deg);
+    }
+  
+    60% {
+      -webkit-transform: translateY(-70px) rotate(90deg);
+      transform: translateY(-70px) rotate(90deg);
+    }
+  
+    100% {
+      -webkit-transform: translateY(-8px) rotate(90deg);
+      transform: translateY(-8px) rotate(90deg);
+    }
+  }
+  
+  .btnpost {
+    width: 63px;
+    height: 75px;
+    background-color: #dddde0;
+    position: absolute;
+    z-index: 11;
+    bottom: 10px;
+    top: 120px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .btnpost_line {
+    width: 47px;
+    height: 9px;
+    background-color: #545354;
+    position: absolute;
+    border-radius: 0px 0px 3px 3px;
+    right: 8px;
+    top: 8px;
+  }
+  
+  .btnpost_line:before {
+    content: "";
+    position: absolute;
+    width: 47px;
+    height: 9px;
+    background-color: #757375;
+    top: -8px;
+  }
+  
+  .btnscreen {
+    width: 47px;
+    height: 23px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 22px;
+    right: 8px;
+    border-radius: 3px;
+  }
+  
+  .btnnumbers {
+    width: 12px;
+    height: 12px;
+    background-color: #838183;
+    box-shadow: 0 -18px 0 0 #838183, 0 18px 0 0 #838183;
+    border-radius: 2px;
+    position: absolute;
+    transform: rotate(90deg);
+    left: 25px;
+    top: 52px;
+  }
+  
+  .btnnumbers_line2 {
+    width: 12px;
+    height: 12px;
+    background-color: #aaa9ab;
+    box-shadow: 0 -18px 0 0 #aaa9ab, 0 18px 0 0 #aaa9ab;
+    border-radius: 2px;
+    position: absolute;
+    transform: rotate(90deg);
+    left: 25px;
+    top: 68px;
+  }
+  
+  @keyframes slide-post {
+    50% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+    }
+  
+    100% {
+      -webkit-transform: translateY(-70px);
+      transform: translateY(-70px);
+    }
+  }
+  
+  .btndollar {
+    position: absolute;
+    font-size: 16px;
+    font-family: "Lexend Deca", sans-serif;
+    width: 100%;
+    left: 0;
+    top: 0;
+    color: #4b953b;
+    text-align: center;
+  }
+  
+  .btncontainer:hover .btndollar {
+    animation: fade-in-fwd 0.3s 1s backwards;
+  }
+  
+  @keyframes fade-in-fwd {
+    0% {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
