@@ -4,6 +4,9 @@ import { useQuery, useMutation } from '@apollo/client';
 import DashboardLayout from '../DashBoard/page';
 import styles from './adminViewCars.module.css';
 import Swal from 'sweetalert2'; 
+import { BsFillFuelPumpFill } from "react-icons/bs";
+import { GiGearStickPattern } from "react-icons/gi";
+import { MdAirlineSeatReclineExtra } from 'react-icons/md';
 import { GET_RENTABLE_VEHICLES, DELETE_RENTABLE_VEHICLE, UPDATE_RENTABLE_VEHICLE } from '@/graphql/mutations';
 
 interface Vehicle {
@@ -18,6 +21,7 @@ interface Vehicle {
   fuel_type:  String;
   seats: number;
   primaryImageUrl: string | null;
+  additionalImageUrls : string[] | null;
   description: string;
 }
 
@@ -181,40 +185,48 @@ const AdminViewCars: React.FC = () => {
 
       <div className={styles.vehicleCardContainer}>
         {filteredVehicles.map((vehicle) => (
+          
           <div className={styles.card} key={vehicle.id}>
             <img
               className={styles.cardImage}
               src={vehicle.primaryImageUrl || 'https://via.placeholder.com/150'}
-              alt={`${vehicle.make} ${vehicle.model}`}
+              alt={`${vehicle.make} ${vehicle.model} ${vehicle.year}`}
             />
             <div className={styles.cardBody}>
               <h2 className={styles.cardTitle}>
-                {vehicle.make} {vehicle.model}
+                {vehicle.make} {vehicle.model} {vehicle.year}
               </h2>
               
-              <p><strong>Year:</strong> {vehicle.year}</p>
+
               <p><strong>Price:</strong>{vehicle.price}</p>
-              <p><strong>Description:</strong> {vehicle.description}</p>
+              
               <p><strong>Quantity:</strong> {vehicle.quantity} </p>
               <p><strong>Available Quantity:</strong>{vehicle.availability} </p>
-              <p><strong>Transmission Type:</strong>{vehicle.transmission} </p>
-              <p><strong>Fuel Type:</strong>{vehicle.fuel_type} </p>
-              <p><strong>Numnber of Seats:</strong>{vehicle.seats} </p>
+              
+              <div className={styles.specs}>
+                <p><GiGearStickPattern/> {vehicle.transmission} </p>
+                <p><BsFillFuelPumpFill/> {vehicle.fuel_type} </p>
+                <p><MdAirlineSeatReclineExtra/> {vehicle.seats} </p>
+              </div>
 
+              <div  className={styles.descriptionContainer}>
+                <p>{vehicle.description}</p>
+              </div>
 
-
-              <button
-                className={styles.editButton}
-                onClick={() => handleEdit(vehicle)}
-              >
-                Edit
-              </button>
-              <button
-                className={styles.deleteButton}
-                onClick={() => handleDelete(vehicle.id)}
-              >
-                Delete
-              </button>
+              <div className={styles.deleteAndUpdateButtonContainer}>
+                <button
+                  className={styles.editButton}
+                  onClick={() => handleEdit(vehicle)}
+                >
+                  Edit
+                </button>
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => handleDelete(vehicle.id)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         ))}

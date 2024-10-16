@@ -1,48 +1,138 @@
 .userProfileContainer {
+  min-height: 100vh;
     padding: 2rem;
-    max-width: 800px;
+    /* max-width: 800px; */
     margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content:first baseline;
+    gap: 120px;
   }
   
-  .profileCard, .bookingsCard {
+
+  .profileCard{
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    width: 20%;
+    /* min-height: 90vh; */
+    max-height: 90vh;
+    max-height: fit-content;
+  }
+
+  .userInfo{
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+    font-size: 70%;
+    max-width: 100%;
+  }
+
+ .bookingsCard {
+    width: 70%;
+    padding-bottom: 10px;
+    min-width: fit-content;
     margin-bottom: 2rem;
-    border: 1px solid #e2e8f0;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
+    max-height: fit-content;
+  }
+  .table{
+    width: 100%;
   }
   
+  .ProfilecardHeader{
+    border-radius: 10px 10px 0px 0px;
+    background-color:#051C34;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content :space-between;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .downloadButton{
+    border: none;
+  }
+  .editButton {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: transparent;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.5s ease; /* Smooth transition for the spin effect */
+  }
+  
+
+  
+
   .cardHeader {
-    background-color: #609df8a9;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 10px 10px 0px 0px;
+    background-color: #051C34;
     padding: 1rem;
     border-bottom: 1px solid #e2e8f0;
+  }
+  .excelicon{
+    color: green;
+  }
+
+  .pdficon{
+    color: red;
+  }
+
+  .excelPdfButtonContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
   }
   
   .cardTitle {
     font-size: 1.5rem;
     font-weight: bold;
   }
+
+  .usercardContent {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    border-radius: 10px;
+  }
   
   .cardContent {
-    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 1.5rem; */
   }
   
   .avatarContainer {
-    display: flex;
     align-items: center;
     margin-bottom: 1rem;
     color: #4a5568;
+    cursor: pointer;
   }
   
   .avatar {
+    border: 5px solid rgb(255, 255, 255);
     position: relative;
-    width: 60px;
-    height: 60px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid #e2e8f0;
+    /* border: 2px solid #e2e8f0; */
     margin-right: 1rem;
   }
+
   
   .avatarImage {
     width: 100%;
@@ -66,7 +156,7 @@
   }
   
   .userInfo {
-    margin-top: 1rem;
+    margin-bottom: 30px;
     color: #4a5568;
   }
   
@@ -99,3 +189,83 @@
     color: #a0aec0;
   }
   
+
+  .pagination {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .editButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #ffffff;
+  }
+  
+  .editButton:hover {
+    color: #1890ff;
+  }
+
+
+  @media (max-width: 768px) {
+    .userProfileContainer {
+      min-height: 100vh;
+        padding: 2rem;
+        /* max-width: 800px; */
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        /* justify-content:first baseline; */
+        gap: 80px;
+      }
+
+      .profileCard{
+        background-color: #ffffff;
+        margin-bottom: 20px;
+        width: 100%;
+        /* min-height: 90vh; */
+        max-height: 90vh;
+        max-height: fit-content;
+      }
+      .userInfo{
+        display: flex;
+        flex-direction: column;
+        text-align: justify;
+        font-size: 12px;
+      }
+
+      
+      .bookingsCard {
+        width: 100%;
+        border: 1px solid rgb(255, 0, 0);
+        padding-bottom: 10px;
+        /* min-width: fit-content; */
+        margin-bottom: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        max-height: fit-content;
+
+      }
+      .table{
+        width: 90%;
+        font-size: 12px;
+      }
+      .cardHeader{
+        display: flex;
+        flex-direction: column;
+      }
+      .excelPdfButtonContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .downloadButton{
+        height: fit-content;
+        width: fit-content;
+        font-size: 10px;
+      }
+
+}

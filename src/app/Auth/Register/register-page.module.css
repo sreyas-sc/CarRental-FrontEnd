@@ -2,8 +2,6 @@
     position: relative; /* Necessary to position the ::before pseudo-element */
     width: 100%;
     min-height: 100vh; /* Full viewport height */
-    background-color: #051C34; /* Fallback background color */
-    background-image: url('/banners/backgroundbmw.png'); /* Path to your background image */
     background-size: contain; /* Control image size */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* No repeat */
@@ -96,15 +94,7 @@
   padding: 10px;
 }
 
-.registerbutton{
-  width: 40%;
-  margin-top: 20px;
-  padding: 10px 30px;
-  border-radius: 10px;
-  cursor: pointer;
-  background-color: rgb(29, 135, 234, 0.8);
-  border: none;
-}
+
 .registerbutton:hover{
   background-color: rgb(29, 135, 234);
 }
@@ -116,4 +106,81 @@
   color: blue;
   cursor: pointer;
 }
-  
+
+
+
+
+.emailinput,
+.phoneinput,
+.passwordinput {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.registerbutton {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #1877f2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.registerbutton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.loginlink {
+  color: #1877f2;
+  text-align: center;
+  cursor: pointer;
+}
+
+.errorMessage {
+  color: red;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.otpPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 90%;
+  max-width: 300px;
+}
+
+.otpPopup h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.otpPopup input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.otpPopup button {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #1877f2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}

@@ -16,19 +16,22 @@
     /* justify-content: center; */
     align-items: center;
     gap: 20px;
+    
 }
 
 .card {
     border: 1px solid #ccc;
     border-radius: 8px;
+    color: #434343;
     overflow: hidden;
-    width: 400px; /* Fixed width for the cards */
-    max-width: 400px; /* Maintain consistent width */
-    min-height: 500px; /* Fixed height for consistency */
-    display: flex; /* Use flexbox to align content */
-    flex-direction: column; /* Align items in a column */
-    justify-content: space-between; /* Space between content and buttons */
+    width: 400px; 
+    max-width: 400px; 
+    min-height: 500px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
     transition: transform 0.2s;
+    align-items: center;
 }
 
 .card:hover {
@@ -44,6 +47,31 @@
 .cardBody {
     padding: 15px;
     flex-grow: 1; /* Allow body to grow */
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.specs{
+  margin-top: 20px;
+  color: #d0d0d0;
+  display: flex;
+  flex-direction: row;
+  background-color: #2b2c37;
+  justify-content: space-around;
+  align-items: center;
+  min-width: max-content;
+  padding: 5px 10px;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.descriptionContainer{
+  width: 100%;
+  text-align: justify;
+  justify-content: center;
+  padding: 10px;
+  font-size:small;
+  margin-top: 10px;
 }
 
 .cardTitle {
@@ -51,33 +79,48 @@
     margin: 0 0 10px;
 }
 
+
+.deleteAndUpdateButtonContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .editButton, .deleteButton {
-    margin-top: 10px; /* Space above buttons */
-    padding: 10px 15px; /* Button padding */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
+    margin-top: 10px; 
+    padding: 10px 15px; 
+    /* border: none;  */
+    border-radius: 5px; 
+    cursor: pointer; 
+    border-radius: 20px;
 }
 
 .editButton {
-    border: 1px solid white;
-    background-color: #45a0493f;
-    color: white; /* White text */
+    border: 0.5px solid rgb(61, 61, 61);
+    background-color: #ffffff3f;
+    color: rgb(126, 126, 126); /* White text */
+    font-weight: bolder;
+
 }
 
 .editButton:hover {
     background-color: #45a049; /* Darker green on hover */
+    color: #ffffff;
+    border-color: transparent;
 }
 
 .deleteButton {
-    border: 1px solid white;
-    margin-left: 20px;
-    background-color: rgba(255, 0, 0, 0.361); /* Red background */
-    color: white; /* White text */
+
+  border: 0.5px solid rgb(61, 61, 61);
+  background-color: #ffffff3f;
+  color: rgb(126, 126, 126); /* White text */
+  font-weight: bolder;
 }
 
 .deleteButton:hover {
     background-color: darkred; /* Darker red on hover */
+    color: #ffffff;
+    border-color: transparent;
 }
 
 .filterInput {

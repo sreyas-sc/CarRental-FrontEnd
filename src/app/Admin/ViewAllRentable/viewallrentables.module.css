@@ -1,338 +1,424 @@
+/* viewallrentables.module.css */
+
 .mainContainer {
-  margin-bottom: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
 .textcontainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .mainhead {
-  color: #1572D3;
   font-size: 2.5rem;
+  color: #333;
   margin-bottom: 10px;
 }
 
 .description {
-  color: #323232;
-  font-size: 1rem;
-  margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: #666;
 }
 
 .container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  width: 80%;
-  margin-top: 5vh;
+  flex-direction: column;
 }
 
-.filterContainer {
+
+.selectedDates {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  gap: 15px;
+  background-color: #f0f0f0;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 
-.searchInput {
-  width: 300px;
-  padding: 10px;
-  border: 1px solid  #000000;
-  background-color: #dddedf00;
-  color: #323232;
-  border-radius: 30px;
+.selectedDates p {
+  font-size: 1rem;
+  color: #333;
+  margin: 0;
 }
 
-.sortSelect {
-  width: 300px;
+.changeDateButton {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.changeDateButton:hover {
+  background-color: #0b7dda;
+}
+
+.popupheader {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.fromAndToPtag {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.popupCarOtherDetails {
+  display: flex;
+  justify-content: space-around;
+  margin: 15px 0;
+  background-color: #f8f8f8;
   padding: 10px;
   border-radius: 4px;
-  border: 1px solid #ddd;
-  background-color: #dddedf00;
-  color: #323232;
-  border: 1px solid  #000000;
-
-  border-radius: 30px;
 }
 
-.priceFilter {
+.detailItemPopup {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  color: #323232;
-}
-  
-
-.rangeInputs {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.carsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin-top: 3rem;
-}
-
-.carcard {
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-  width: 300px;
-  cursor: pointer;
-}
-
-.carcard:hover {
-  transform: scale(1.05);
-}
-
-.carImage {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.carInfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.carName {
-  color: #1942a1;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.carDetails {
-  color: #737373;
   font-size: 0.9rem;
-  margin: 5px 0;
+  color: #555;
 }
 
-.rentbutton {
-  background-color: #5794f5;
-  width: 100%;
-  height: 40px;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-  font-weight: bold;
+.detailItemPopup svg {
+  margin-right: 5px;
 }
 
-.rentbutton:hover {
-  background-color: #4197f9;
-  cursor: pointer;
-}
-
-.noResultsContainer{
-  max-width: 100%;
- 
-}
-
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+.popupButtonContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.popupContent {
-  background: white;
-  color: #323232;
-  padding: 20px;
-  border-radius: 8px;
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative; /* Added this line */
-}
-.popupdetailscontainer{
-  width: 100%;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  border: 1px solid rgba(14, 14, 14, 0.276);
-  border-radius: 20px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-.descriptionContainer{
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.closeButton {
-  position: absolute;
-  top: 2px;
-  right: 5px;
-  font-size: 1.5rem;
-  color: #F55757;
-  cursor: pointer;
-}
-
-
-.popupImage {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-
-.rentButton {
-  background-color: #57bbf5;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
-.rentButton:hover {
-  background-color: #41bcf9c4;
+
+.filterContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
-  .container,
-  .carsContainer {
-    flex-direction: column;
-  }
-
-  .carcard {
-    width: 90%;
-  }
-
-  .filterContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: stretch;
-  }
-}
-
-.disabledCard {
-  opacity: 0.5;
-  pointer-events: none;
-  position: relative;
-}
-
-.notAvailableOverlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 18px;
-  color: red;
-  font-weight: bold;
-  background-color: rgba(255, 255, 255, 0.7);
+.searchInput, .sortSelect {
   padding: 10px;
-  border-radius: 5px;
-  z-index: 2;
+  font-size: 1rem;
+  background-color: #464645;
+  border: 1px solid #dddddd00;
+  border-radius: 20px;
 }
 
-
-
-/* Loader */
-
-.loaderContainer{
-  min-height: 100vh;
-  /* background-color: #000000; */
-  align-items: center;
-  justify-content: center;
-}
-.loader {
-  width: 100px;
-  height: 100px;
-  /* margin: auto; */
-  margin-top: 30%;
-  margin-left: 50%;
-  position: relative;
+.searchInput {
+  flex-grow: 1;
+  margin-right: 10px;
 }
 
-.loader:before {
-  content: '';
-  width: 48px;
-  height: 5px;
-  background: #f0808050;
-  position: absolute;
-  top: 60px;
-  left: 0;
-  border-radius: 50%;
-  animation: shadow324 0.5s linear infinite;
+.sortSelect {
+  width: 200px;
 }
 
-.loader:after {
-  content: '';
+.vehiclesContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.totalAmount {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #464645;
+  margin: 10px 15px;
+  background-color: #fff3e0;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.totalAmountPopup {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #84706b;
+  margin: 15px 0;
+  background-color: #fff3e0;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.vehicleCard {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.vehicleCard:hover {
+  transform: translateY(-5px);
+}
+
+.vehicleImage {
   width: 100%;
-  height: 100%;
-  background: #1572D3;
-  position: absolute;
+  height: 200px;
+  object-fit: cover;
+}
+
+.vehicleTitle {
+  font-size: 1.2rem;
+  margin: 10px 15px;
+  color: #333;
+}
+
+.vehicleYear {
+  font-size: 1rem;
+  color: #666;
+  margin: 5px 15px;
+}
+
+.vehiclePrice {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #4CAF50;
+  margin: 10px 15px;
+}
+
+.vehicleDetails {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 15px;
+  background-color: #f8f8f8;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.detailItem svg {
+  margin-right: 5px;
+}
+
+/* Popup styles */
+.popupOverlay {
+  position: fixed;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popupContent {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popupheader {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+
+.popupContent h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.popupContent img {
+  width: 100%;
+  height: auto;
   border-radius: 4px;
-  animation: jump7456 0.5s linear infinite;
+  margin-bottom: 15px;
 }
 
-@keyframes jump7456 {
-  15% {
-    border-bottom-right-radius: 3px;
-  }
-
-  25% {
-    transform: translateY(9px) rotate(22.5deg);
-  }
-
-  50% {
-    transform: translateY(18px) scale(1, .9) rotate(45deg);
-    border-bottom-right-radius: 40px;
-  }
-
-  75% {
-    transform: translateY(9px) rotate(67.5deg);
-  }
-
-  100% {
-    transform: translateY(0) rotate(90deg);
-  }
+.popupContent p {
+  margin-bottom: 10px;
+  color: #666;
 }
 
-@keyframes shadow324 {
+.rentNowButton, .closeButton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-  0%,
-    100% {
-    transform: scale(1, 1);
-  }
+.rentNowButton {
+  background-color: #4CAF50;
+  color: white;
+  margin-right: 10px;
+}
 
-  50% {
-    transform: scale(1.2, 1);
-  }
+.rentNowButton:hover {
+  background-color: #45a049;
+}
+
+.closeButton {
+  background-color: #f44336;
+  color: white;
+}
+
+.closeButton:hover {
+  background-color: #da190b;
+}
+
+/* Date popup styles */
+
+.fromAndToPtag{
+margin-top: 25px;
+color: #333;
+font-weight: 700;
+}
+
+.dateInput {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #333;
+  border-radius: 10px;
+}
+
+.dateButton, .closeButton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 48%;
+}
+
+.dateButton {
+  background-color: #1890ff;
+  color: white;
+}
+
+.dateButton:hover {
+  background-color: #40a9ff;
+}
+
+.closeButton {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.closeButton:hover {
+  background-color: #e8e8e8;
+}
+
+/* Loader styles */
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+.popupCarOtherDetails{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-content: space-around;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.detailItemPopup{
+  color: #ffffff;
+}
+
+.popupButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.imageCarousel {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.carouselImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.carouselButton:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carouselButton:first-child {
+  left: 10px;
+}
+
+.carouselButton:last-child {
+  right: 10px;
 }

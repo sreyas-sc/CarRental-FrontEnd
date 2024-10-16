@@ -1,0 +1,221 @@
+/* view-bookings.module.css */
+
+.container {
+    padding: 2rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 50px;
+  }
+    
+  .filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  
+
+.filterInput {
+    border: none;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: #ffffff;
+    color: #141415;
+    box-shadow: 20px 20px 60px #c5c5c5,
+           -20px -20px 60px #ffffff;
+    transition: 0.3s;
+   }
+   
+   .filterInput:focus {
+    outline-color: #ffffff;
+    background: #ffffff;
+    box-shadow: inset 20px 20px 60px #c5c5c5,
+           inset -20px -20px 60px #ffffff;
+    transition: 0.3s;
+   }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .tableHeader {
+    background-color: #141415;
+    font-weight: bold;
+    color: #e2dcdc;
+  }
+  
+  .tableHeader th {
+    padding: 12px 16px;
+    text-align: left;
+  }
+  
+  .tableBody td {
+    padding: 12px 16px;
+    border-top: 1px solid #f0f0f0;
+    color: #141415;
+  }
+  
+  .tableRow:hover {
+    background-color: #6e7e85;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .paginationButton {
+    margin: 0 0.25rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d9d9d9;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .paginationButton:hover {
+    background-color: #f0f2f5;
+  }
+  
+  .activePage {
+    background-color: #cccccc;
+    color: white;
+    border-color: #1890ff;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+  
+    .title {
+      font-size: 1.5rem;
+    }
+  
+    .buttonsContainer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+  
+    .exportButton {
+      margin-left: 0;
+      margin-bottom: 0.5rem;
+    }
+  
+    .filters {
+      flex-direction: column;
+    }
+  
+    .filterInput {
+      margin-bottom: 0.5rem;
+    }
+  
+    .table {
+      font-size: 0.9rem;
+    }
+  
+    .pagination {
+      flex-wrap: wrap;
+    }
+  
+    .paginationButton {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+
+  /* Download Button CSS */
+  /* From Uiverse.io by barisdogansutcu */ 
+.exportButton {
+    position: relative;
+    border-width: 0;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    z-index: 1;
+  }
+  
+  .exportButton .docs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 40px;
+    padding: 0 10px;
+    border-radius: 4px;
+    z-index: 1;
+    background-color: #242a35;
+    border: solid 1px #e8e8e82d;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  
+  .exportButton:hover {
+    box-shadow:
+      rgba(0, 0, 0, 0.25) 0px 54px 55px,
+      rgba(0, 0, 0, 0.12) 0px -12px 30px,
+      rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 12px 13px,
+      rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  }
+  
+  .download {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90%;
+    margin: 0 auto;
+    z-index: -1;
+    border-radius: 4px;
+    transform: translateY(0%);
+    background-color: #01e056;
+    border: solid 1px #01e0572d;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  
+  .exportButton:hover .download {
+    transform: translateY(100%);
+  }
+  
+  .download svg polyline,
+  .download svg line {
+    animation: docs 1s infinite;
+  }
+  
+  @keyframes docs {
+    0% {
+      transform: translateY(0%);
+    }
+  
+    50% {
+      transform: translateY(-15%);
+    }
+  
+    100% {
+      transform: translateY(0%);
+    }
+  }
+  

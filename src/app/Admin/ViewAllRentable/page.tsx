@@ -1,16 +1,22 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_RENTABLE_VEHICLES } from '@/graphql/mutations';
+import { useLazyQuery } from '@apollo/client';
+import { GET_AVAILABLE_CARS } from '@/graphql/mutations'; // Change your GraphQL query accordingly
 import styles from './viewallrentables.module.css';
 import Swal from 'sweetalert2';
-import { useRouter } from 'next/navigation'; // For navigation to login page
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import { GiGearStickPattern } from "react-icons/gi";
 import { MdAirlineSeatReclineExtra } from 'react-icons/md';
+import { DatePicker, Space } from 'antd';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 
+
+dayjs.extend(customParseFormat);
+const { RangePicker } = DatePicker;
 
 interface Vehicle {
   id: string;
@@ -19,37 +25,96 @@ interface Vehicle {
   year: string;
   price: number;
   primaryImageUrl: string | null;
+  additionalImageUrls : string | null;
   description: string;
   quantity: number;
   availability: number;
   type: string;
-  transmission:  string;
+  transmission: string;
   fuel_type: string;
   seats: number;
+  totalAmount: number;
 }
 
-interface GetRentableVehiclesResponse {
-  getRentableVehicles: Vehicle[];
+interface GetAvailableCarsResponse {
+  getAvailableCars: Vehicle[];
 }
-
-const vehicleTypes = ['All', 'SUV', 'Sedan', 'MUV', 'Hatchback', 'Luxury'];
-const sortOptions = ['Price: Low to High', 'Price: High to Low', 'Type'];
 
 const ViewAllCarsPage: React.FC = () => {
-  const { loading, error, data } = useQuery<GetRentableVehiclesResponse>(GET_RENTABLE_VEHICLES);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [filter, setFilter] = useState('');
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
-  const [selectedType, setSelectedType] = useState('All');
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
   const [sortBy, setSortBy] = useState('');
-  const router = useRouter(); // Router for navigation
+  const [fetchAvailableCars, { loading, error, data }] = useLazyQuery<GetAvailableCarsResponse>(GET_AVAILABLE_CARS);
+  const router = useRouter();
+  const [dateRange, setDateRange] = useState<[dayjs.Dayjs | null, dayjs.Dayjs | null] | null>(null);
+
+
+  const [selectedStartDate, setSelectedStartDate] = useState('');
+  const [selectedEndDate, setSelectedEndDate] = useState('');
+
+  // State for date popup
+  const [showDatePopup, setShowDatePopup] = useState(true);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   useEffect(() => {
-    if (!loading && data?.getRentableVehicles) {
-      setVehicles(data.getRentableVehicles);
+    if (data?.getAvailableCars) {
+      setVehicles(data.getAvailableCars);
     }
-  }, [data, loading]);
+  }, [data]);
+
+  const calculateDaysBetween = (startDate: string, endDate: string) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = Math.abs(end.getTime() - start.getTime());
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+  // courosel section
+  const getImageUrl = (url: string | null): string => {
+    return url || '/placeholder.png';
+  };
+
+  const getImageUrls = (vehicle: Vehicle): string[] => {
+    const urls = [getImageUrl(vehicle.primaryImageUrl)];
+    if (vehicle.additionalImageUrls && Array.isArray(vehicle.additionalImageUrls)) {
+      urls.push(...vehicle.additionalImageUrls.map(getImageUrl));
+    }
+    return urls;
+  };
+  
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (selectedVehicle) {
+      setImageUrls(getImageUrls(selectedVehicle));
+      setCurrentImageIndex(0);
+    }
+  }, [selectedVehicle]);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + imageUrls.length) % imageUrls.length);
+  };
+
+  // courosel section
+
+  useEffect(() => {
+    if (data?.getAvailableCars) {
+      const daysBooked = calculateDaysBetween(selectedStartDate, selectedEndDate);
+      const vehiclesWithTotalAmount = data.getAvailableCars.map(vehicle => ({
+        ...vehicle,
+        totalAmount: vehicle.price * daysBooked
+      }));
+      setVehicles(vehiclesWithTotalAmount);
+    }
+  }, [data, selectedStartDate, selectedEndDate]);
 
   const handleCardClick = (vehicle: Vehicle) => {
     setSelectedVehicle(vehicle);
@@ -68,7 +133,6 @@ const ViewAllCarsPage: React.FC = () => {
     const token = sessionStorage.getItem('token');
   
     if (!user || !token) {
-      // If no user in session storage, prompt to login
       Swal.fire({
         title: 'Login Required',
         text: 'Please login to proceed with the booking!',
@@ -78,35 +142,60 @@ const ViewAllCarsPage: React.FC = () => {
         cancelButtonText: 'Cancel',
       }).then((result) => {
         if (result.isConfirmed) {
-          router.push("/Auth/Login"); // Navigate to login page
+          router.push("/Auth/Login");
         }
       });
-    } else if (selectedVehicle) {
-      // Ensure selectedVehicle is not null
+    } else if (selectedVehicle && selectedStartDate && selectedEndDate) {
       const queryParams = new URLSearchParams({
         id: selectedVehicle.id,
+        fromdate: selectedStartDate,
+        todate: selectedEndDate,
+        amount: selectedVehicle.totalAmount.toString(),
       });
-  
-      router.push(`/User/BookCar?${queryParams.toString()}`); 
+      router.push(`/User/BookCar?${queryParams.toString()}`);
     } else {
       Swal.fire({
         title: 'Error',
-        text: 'Selected vehicle is not available.',
+        text: 'Please select valid dates and vehicle for booking.',
         icon: 'error',
       });
     }
   };
   
 
-  
-  
+  // Function to handle date submission
+  const handleDateSubmit = () => {
+    if (dateRange && dateRange[0] && dateRange[1]) {
+      const startDate = dateRange[0].format('YYYY-MM-DD');
+      const endDate = dateRange[1].format('YYYY-MM-DD');
+      setSelectedStartDate(startDate);
+      setSelectedEndDate(endDate);
+      fetchAvailableCars({
+        variables: { startdate: startDate, enddate: endDate },
+      });
+      setShowDatePopup(false);
+    } else {
+      Swal.fire({
+        title: 'Error',
+        text: 'Please select both start and end dates.',
+        icon: 'error',
+      });
+    }
+  };
+
+
+  const openDatePopup = () => {
+    if (selectedStartDate && selectedEndDate) {
+      setDateRange([dayjs(selectedStartDate), dayjs(selectedEndDate)]);
+    }
+    setShowDatePopup(true);
+  };
 
   const filteredAndSortedVehicles = vehicles
     .filter(vehicle =>
       (vehicle.make.toLowerCase().includes(filter.toLowerCase()) ||
         vehicle.model.toLowerCase().includes(filter.toLowerCase())) &&
-      (selectedType === 'All' || vehicle.type === selectedType) &&
-      vehicle.price >= priceRange[0] && vehicle.price <= priceRange[1]
+      vehicle.price >= 0 // Adjust price filtering logic as needed
     )
     .sort((a, b) => {
       if (sortBy === 'Price: Low to High') return a.price - b.price;
@@ -115,17 +204,7 @@ const ViewAllCarsPage: React.FC = () => {
       return 0;
     });
 
-  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const newValue = parseInt(event.target.value, 10);
-    setPriceRange(prev => {
-      const newRange = [...prev] as [number, number];
-      newRange[index] = newValue;
-      return newRange;
-    });
-  };
-
   if (loading) return <div className={styles.loaderContainer}><div className={styles.loader}></div></div>;
-  console.log('Loading:', loading);
   if (error) return <p>Error: {error.message}</p>;
 
   return (
@@ -134,6 +213,35 @@ const ViewAllCarsPage: React.FC = () => {
         <h1 className={styles.mainhead}>Find Your Perfect Ride</h1>
         <p className={styles.description}>Explore our wide range of vehicles for rent</p>
       </div>
+
+
+      {selectedStartDate && selectedEndDate && (
+    <div className={styles.selectedDates}>
+      <p>Selected Dates: {selectedStartDate} to {selectedEndDate}</p>
+      <button onClick={openDatePopup} className={styles.changeDateButton}>Change Dates</button>
+    </div>
+  )}
+
+      {/* Date Popup */}
+      {showDatePopup && (
+        <div className={styles.popupOverlay}>
+          <div className={styles.popupContent}>
+            <h2 className={styles.popupheader}>Select Dates</h2>
+            <Space direction="vertical" size={12}>
+              <RangePicker
+                value={dateRange}
+                onChange={(dates) => setDateRange(dates)}
+                format="YYYY-MM-DD"
+              />
+            </Space>
+            <div className={styles.popupButtonContainer}>
+              <button onClick={handleDateSubmit} className={styles.dateButton}>View Available Vehicles</button>
+              <button onClick={() => setShowDatePopup(false)} className={styles.closeButton}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className={styles.container}>
         <div className={styles.filterContainer}>
           <input
@@ -145,93 +253,103 @@ const ViewAllCarsPage: React.FC = () => {
           />
           <select onChange={handleSortChange} value={sortBy} className={styles.sortSelect}>
             <option value="">Sort by...</option>
-            {sortOptions.map((option) => (
-              <option key={option} value={option}>{option}</option>
-            ))}
+            <option value="Price: Low to High">Price: Low to High</option>
+            <option value="Price: High to Low">Price: High to Low</option>
           </select>
-          <div className={styles.priceFilter}>
-            <p>Price Range: ₹{priceRange[0]} - ₹{priceRange[1]}</p>
-            <div className={styles.rangeInputs}>
-              <input
-                type="range"
-                min="0"
-                max="10000"
-                step="100"
-                className={styles.slider}
-                value={priceRange[0]}
-                onChange={(e) => handlePriceChange(e, 0)}
-              />
-              <input
-                type="range"
-                min="0"
-                max="10000"
-                step="100"
-                value={priceRange[1]}
-                onChange={(e) => handlePriceChange(e, 1)}
-              />
-            </div>
-          </div>
         </div>
-      </div>
-      <div className={styles.carsContainer}>
-        {filteredAndSortedVehicles.length > 0 ? (
-          filteredAndSortedVehicles.map((vehicle) => (
-            <div
-              key={vehicle.id}
-              className={`${styles.carcard} ${vehicle.availability === 0 ? styles.disabledCard : ''}`}
-              onClick={() => handleCardClick(vehicle)}
-            >
-              {vehicle.availability === 0 && <span className={styles.notAvailableOverlay}>Not Available</span>}
-              <img
-                src={vehicle.primaryImageUrl || 'https://via.placeholder.com/300x200'}
+        
+       
+        {vehicles.length === 0 && !loading && (
+          <div className={styles.noVehiclesContainer}>
+          <Image
+            src="/banners/search-not_found.jpg"
+            width={300}
+            height={300}
+            alt="No cars available"
+            className={styles.noVehiclesImage}
+          />
+          <p className={styles.noVehiclesText}>No vehicles available for the selected dates. Please try different dates.</p>
+        </div>
+        )}
+
+        <div className={styles.vehiclesContainer}>
+          {filteredAndSortedVehicles.map(vehicle => (
+            <div key={vehicle.id} className={styles.vehicleCard} onClick={() => handleCardClick(vehicle)}>
+              <Image
+                src={vehicle.primaryImageUrl || '/placeholder.png'}
                 alt={`${vehicle.make} ${vehicle.model}`}
-                className={styles.carImage}
+                width={300}
+                height={200}
+                className={styles.vehicleImage}
               />
-              <div className={styles.carInfo}>
-                <h2 className={styles.carName}>{vehicle.make} {vehicle.model}</h2>
-                <p className={styles.carDetails}>Price: ₹{vehicle.price}/day</p>
+              <h2 className={styles.vehicleTitle}>{`${vehicle.make} ${vehicle.model}`}</h2>
+              <p className={styles.vehicleYear}>{vehicle.year}</p>
+              <p className={styles.vehiclePrice}>₹{vehicle.price}/day</p>
+              {selectedStartDate && selectedEndDate && (
+                <p className={styles.totalAmount}>Total: ₹{vehicle.totalAmount}</p>
+              )}
+              <div className={styles.vehicleDetails}>
+                <div className={styles.detailItem}>
+                  <BsFillFuelPumpFill /> <span>{vehicle.fuel_type}</span>
+                </div>
+                <div className={styles.detailItem}>
+                  <GiGearStickPattern /> <span>{vehicle.transmission}</span>
+                </div>
+                <div className={styles.detailItem}>
+                  <MdAirlineSeatReclineExtra /> <span>{vehicle.seats} seats</span>
+                </div>
               </div>
-              <button
-                className={styles.rentbutton}
-                onClick={handleRentNowClick}
-                disabled={vehicle.availability === 0}
-              >
-                Rent Now
-              </button>
             </div>
-          ))
-        ) : (
-          <div className={styles.noResultsContainer}>
-            <Image src="/banners/search-not_found.jpg" alt="No Results Found" width={"500"} height={"400"} className={styles.noResultsImage} />
-            <p className={styles.noResultsText}>No results found. Please try adjusting your filters.</p>
+          ))}
+        </div>
+
+        {/* Popup for Selected Vehicle */}
+        {selectedVehicle && (
+          <div className={styles.popupOverlay} onClick={closePopup}>
+            <div className={styles.popupContent} onClick={e => e.stopPropagation()}>
+              <h2>{`${selectedVehicle.make} ${selectedVehicle.model}`}</h2>
+              {/* <Image
+                src={selectedVehicle.primaryImageUrl || '/placeholder.png'}
+                alt={`${selectedVehicle.make} ${selectedVehicle.model}`}
+                width={400}
+                height={250}
+              /> */}
+              <div className={styles.imageCarousel}>
+              <button onClick={prevImage} className={styles.carouselButton}>&#10094;</button>
+              <Image
+                src={imageUrls[currentImageIndex]}
+                alt={`${selectedVehicle.make} ${selectedVehicle.model}`}
+                width={400}
+                height={250}
+                className={styles.carouselImage}
+              />
+              <button onClick={nextImage} className={styles.carouselButton}>&#10095;</button>
+            </div>
+              <p>{selectedVehicle.description}</p>
+              <p>Price: ₹{selectedVehicle.price}/day</p>
+              {selectedStartDate && selectedEndDate && (
+                <p className={styles.totalAmountPopup}>Total: ₹{selectedVehicle.totalAmount}</p>
+              )}
+
+              <div className={styles.popupCarOtherDetails}>
+                <div className={styles.detailItemPopup}>
+                  <BsFillFuelPumpFill /> <span>{selectedVehicle.fuel_type}</span>
+                </div>
+                <div className={styles.detailItemPopup}>
+                  <GiGearStickPattern /> <span>{selectedVehicle.transmission}</span>
+                </div>
+                <div className={styles.detailItemPopup}>
+                  <MdAirlineSeatReclineExtra /> <span>{selectedVehicle.seats} seats</span>
+                </div>
+              </div>
+              <div className={styles.popupButtonContainer}>
+                <button onClick={handleRentNowClick} className={styles.rentNowButton}>Rent Now</button>
+                <button onClick={closePopup} className={styles.closeButton}>Close</button>
+              </div>
+            </div>
           </div>
         )}
       </div>
-      {selectedVehicle && (
-        <div className={styles.popup}>
-          <div className={styles.popupContent}>
-            <span className={styles.closeButton} onClick={closePopup}>&times;</span>
-            <img
-              src={selectedVehicle.primaryImageUrl || 'https://via.placeholder.com/500x300'}
-              alt={`${selectedVehicle.make} ${selectedVehicle.model}`}
-              className={styles.popupImage}
-            />
-            <h2>{selectedVehicle.make} {selectedVehicle.model} {selectedVehicle.year}</h2>
-            {/* <p><strong>Year:</strong> {selectedVehicle.year}</p> */}
-            <p><strong>Price:</strong> ₹{selectedVehicle.price}/day</p>
-            <p><strong>Available:</strong> {selectedVehicle.availability}</p>
-            <div className={styles.popupdetailscontainer}>
-              <p><strong><GiGearStickPattern/></strong> {selectedVehicle.transmission}</p>
-              <p><strong><BsFillFuelPumpFill/></strong> {selectedVehicle.fuel_type}</p>
-              <p><strong><MdAirlineSeatReclineExtra /></strong> {selectedVehicle.seats}</p>
-            </div>
-            <div className={styles.descriptionContainer}>
-              <p>{selectedVehicle.description}</p>
-            </div>
-              <button className={styles.rentButton} onClick={handleRentNowClick}>Rent Now</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
