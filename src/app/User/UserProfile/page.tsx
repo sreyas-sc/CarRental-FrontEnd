@@ -307,24 +307,30 @@ const UserProfile: React.FC = () => {
           <button className={styles.editButton} onClick={showEditModal}><PiPencilSimpleLine /></button>
         </div>
         <div className={styles.usercardContent}>
-          <div className={styles.avatarContainer}>
-            <Dropdown overlay={avatarMenu} trigger={['click']}>
-              <div className={styles.avatar}>
-                {user.imageUrl ? (
-                  <img
-                    src={user.imageUrl}
-                    alt={user.name}
-                    className={styles.avatarImage}
-                  />
-                ) : (
-                  <UserOutlined className={styles.defaultAvatarIcon} />
-                )}
+        <div className={styles.avatarContainer}>
+          <Dropdown overlay={avatarMenu} trigger={['click']}>
+            <div className={styles.avatar}>
+              {user.imageUrl ? (
+                <img
+                  src={user.imageUrl}
+                  alt={user.name}
+                  className={styles.avatarImage}
+                  onError={(e) => {
+                    e.currentTarget.src = "https://via.placeholder.com/150"; // Fallback image in case of error
+                  }}
+                />
+              ) : (
+                <UserOutlined className={styles.defaultAvatarIcon} />
+              )}
+              {!user.imageUrl && (
                 <div className={styles.avatarFallback}>
                   {user.name.charAt(0).toUpperCase()}
                 </div>
-              </div>
-            </Dropdown>
-          </div>
+              )}
+            </div>
+          </Dropdown>
+        </div>
+
           <div className={styles.userInfo}>
             <div className={styles.infoItem}>
               <Mail className={styles.infoIcon} />

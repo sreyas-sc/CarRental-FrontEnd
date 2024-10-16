@@ -308,12 +308,6 @@ const ViewAllCarsPage: React.FC = () => {
           <div className={styles.popupOverlay} onClick={closePopup}>
             <div className={styles.popupContent} onClick={e => e.stopPropagation()}>
               <h2>{`${selectedVehicle.make} ${selectedVehicle.model}`}</h2>
-              {/* <Image
-                src={selectedVehicle.primaryImageUrl || '/placeholder.png'}
-                alt={`${selectedVehicle.make} ${selectedVehicle.model}`}
-                width={400}
-                height={250}
-              /> */}
               <div className={styles.imageCarousel}>
               <button onClick={prevImage} className={styles.carouselButton}>&#10094;</button>
               <Image
