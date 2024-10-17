@@ -22,6 +22,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             height={34}
             alt="Company Logo"
           />
+                    
         </div>
 
         {/* Sidebar Navigation Buttons */}

@@ -40,11 +40,13 @@ const Login = () => {
       sessionStorage.setItem('token', data.login.token);
       sessionStorage.setItem('user', JSON.stringify(data.login.user));
       // Redirect or perform further actions upon successful login
+      const userName = data.login.user.name;
+      
 
       Swal.fire({
         icon: 'success',
         title: 'Login Successful',
-        text: 'Welcome back!',
+        text: `Welcome back ${userName}`,
       }).then(() => {
         // Redirect or perform further actions upon successful login
         window.location.href = '/'; // Adjust the redirect path as needed

@@ -76,8 +76,14 @@ const UserProfile: React.FC = () => {
     }
   }, [data]);
 
-  if (!user) return <div>Loading...</div>;
-  if (loading) return <p>Loading bookings...</p>;
+  // delete this if not working
+  if (!user) return <div>
+      <div className={styles.spinnerContainer}><div className={styles.spinner}></div></div>
+  </div>;
+  // till here
+
+  // if (!user) return <div>Loading...</div>;
+  if (loading) return <div className={styles.spinnerContainer}><div className={styles.spinner}></div></div>;
   if (error) return <p>Error loading bookings: {error.message}</p>;
 
   const handleRowSelectionChange = (newSelectedRowKeys: React.Key[]) => {
@@ -219,6 +225,8 @@ const UserProfile: React.FC = () => {
     }
   };
 
+  
+
   const showChangePasswordModal = () => {
     passwordForm.resetFields();
     setIsChangePasswordModalVisible(true);
@@ -266,41 +274,6 @@ const UserProfile: React.FC = () => {
 
   return (
     <div className={styles.userProfileContainer}>
-      {/* <div className={styles.profileCard}>
-        <div className={styles.ProfilecardHeader}>
-          <h2 className={styles.cardTitle}>{user.name}</h2>
-          <button className={styles.editButton} onClick={showEditModal}><PiPencilSimpleLine /></button>
-        </div>
-        <div className={styles.usercardContent}>
-          <div className={styles.avatarContainer}>
-            <div className={styles.avatar}>
-              <img
-                src={`https://api.dicebear.com/6.x/initials/svg?seed=${user.name}`}
-                alt={user.name}
-                className={styles.avatarImage}
-              />
-              <div className={styles.avatarFallback}>
-                {user.name.charAt(0).toUpperCase()}
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.userInfo}>
-            <div className={styles.infoItem}>
-              <Mail className={styles.infoIcon} />
-              <span>{user.email}</span>
-            </div>
-            <div className={styles.infoItem}>
-              <Phone className={styles.infoIcon} />
-              <span>{user.phone}</span>
-            </div>
-            <div className={styles.infoItem}>
-              <MapPin className={styles.infoIcon} />
-              <span>{`${user.city}, ${user.state}, ${user.country}`}</span>
-            </div>
-          </div>
-        </div>
-      </div> */}
       <div className={styles.profileCard}>
         <div className={styles.ProfilecardHeader}>
           <h2 className={styles.cardTitle}>{user.name}</h2>

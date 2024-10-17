@@ -12,8 +12,8 @@ export const REGISTER_MUTATION = gql`
 
 // To update the user details(Address, name)
 export const UPDATE_USER_MUTATION = gql`
-  mutation UpdateUser($id: ID!, $name: String, $email: String, $phone: String, $city: String, $state: String, $country: String) {
-    updateUser(id: $id, input: { name: $name, email: $email, phone: $phone, city: $city, state: $state, country: $country }) {
+  mutation UpdateUser($id: ID!, $name: String, $email: String, $phone: String, $city: String, $state: String, $country: String, $imageUrl: String) {
+    updateUser(id: $id, input: { name: $name, email: $email, phone: $phone, city: $city, state: $state, country: $country,  imageUrl: $imageUrl }) {
       id
       name
       email
@@ -21,6 +21,7 @@ export const UPDATE_USER_MUTATION = gql`
       city
       state
       country
+      imageUrl
     }
   }
 `;
