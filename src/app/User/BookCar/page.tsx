@@ -407,9 +407,10 @@ const Booking: React.FC = () => {
             
                 // Navigate to User Profile after the alert
                 setTimeout(() => {
-                  router.push('/User/UserProfile');
+                  // router.push('/User/UserProfile');
+                  window.location.href = '/User/UserProfile';
                 }, 3000); // Delay navigation for a few seconds after the alert
-              }, 2000); // Adjust this delay for how long you want the confetti to show (in milliseconds)
+              }, 3000); // Adjust this delay for how long you want the confetti to show (in milliseconds)
             }
             
           } catch (error) {
@@ -510,7 +511,7 @@ const Booking: React.FC = () => {
           <div className={styles.btnpost}>
           <div className={styles.btnpost_line}></div>
           <div className={styles.btnscreen}>
-            <div className={styles.btndollar}>$</div>
+            <div className={styles.btndollar}>₹</div>
           </div>
           <div className={styles.btnnumbers}></div>
           <div className={styles.btnnumbers_line2}></div>

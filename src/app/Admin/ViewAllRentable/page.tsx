@@ -71,6 +71,32 @@ const ViewAllCarsPage: React.FC = () => {
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
 
+      // Function to disable past dates and prevent invalid date ranges
+    const disabledDate = (current: dayjs.Dayjs) => {
+      return current && current < dayjs().startOf('day'); // Disable past dates
+    };
+
+    const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null) => {
+      if (dates && dates[0] && dates[1]) {
+        const start = dates[0];
+        const end = dates[1];
+    
+        // Check if the selected range is valid
+        if (end.diff(start, 'day') < 1) {
+          Swal.fire({
+            title: 'Error',
+            text: 'There must be at least a 1-day gap between the pick-up date and drop-off dates.',
+            icon: 'error',
+          });
+          setDateRange(null);
+        } else {
+          setDateRange(dates);
+        }
+      } else {
+        setDateRange(dates);
+      }
+    };
+
   // courosel section
   const getImageUrl = (url: string | null): string => {
     return url || '/placeholder.png';
@@ -230,8 +256,9 @@ const ViewAllCarsPage: React.FC = () => {
             <Space direction="vertical" size={12}>
               <RangePicker
                 value={dateRange}
-                onChange={(dates) => setDateRange(dates)}
+                onChange={handleDateChange}
                 format="YYYY-MM-DD"
+                disabledDate={disabledDate} // Disable past dates
               />
             </Space>
             <div className={styles.popupButtonContainer}>
