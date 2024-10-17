@@ -1,11 +1,9 @@
 .cardContainer {
     margin-top: 20px;
     display: flex;
-    /* flex-wrap: wrap; */
     margin-left: 30px;
     margin-bottom: 20px;
     justify-content: center;
-    /* align-items: center; */
     flex-direction: column;
     gap: 20px; /* Adjust gap between cards */
 }
@@ -13,7 +11,6 @@
 .vehicleCardContainer {
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: center; */
     align-items: center;
     gap: 20px;
     

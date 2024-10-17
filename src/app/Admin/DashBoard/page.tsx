@@ -1,19 +1,26 @@
-// components/DashboardLayout.tsx
 import Image from 'next/image';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import styles from './admin-dashboard.module.css';
 
-// Define types for layout props
 interface DashboardLayoutProps {
   children: ReactNode;
 }
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className={styles.container}>
       {/* Sidebar */}
-      <div className={styles.left}>
+      <div className={`${styles.left} ${isOpen ? styles.open : styles.closed}`}>
+        <button className={styles.toggleButton} onClick={toggleSidebar}>
+          {isOpen ? '≪' : '≫'}
+        </button>
         <div className={styles.companylogo}>
           <Image
             src="/icons/brand-logo.svg"
@@ -22,7 +29,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             height={34}
             alt="Company Logo"
           />
-                    
         </div>
 
         {/* Sidebar Navigation Buttons */}
@@ -51,8 +57,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       </div>
 
       {/* Main Content */}
-      <div className={styles.right}>
-        {children} {/* This renders the page-specific content */}
+      <div className={`${styles.right} ${isOpen ? '' : styles.expanded}`}>
+        {children}
       </div>
     </div>
   );
