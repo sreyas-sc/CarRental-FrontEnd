@@ -21,6 +21,7 @@ const LOGIN_USER = gql`
         city
         country
         state
+        imageUrl
       }
     }
   }

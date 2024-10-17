@@ -241,12 +241,18 @@ const ViewAllCarsPage: React.FC = () => {
       </div>
 
 
-      {selectedStartDate && selectedEndDate && (
+      {/* {selectedStartDate && selectedEndDate && (
     <div className={styles.selectedDates}>
       <p>Selected Dates: {selectedStartDate} to {selectedEndDate}</p>
       <button onClick={openDatePopup} className={styles.changeDateButton}>Change Dates</button>
     </div>
-  )}
+  )}   */}
+      
+    <div className={styles.selectedDates}>
+      <p className={styles.selecteddatep}>Selected Dates: {selectedStartDate} to {selectedEndDate}</p>
+      <button onClick={openDatePopup} className={styles.changeDateButton}>Change Dates</button>
+    </div>
+     
 
       {/* Date Popup */}
       {showDatePopup && (
