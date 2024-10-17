@@ -238,76 +238,80 @@ const AdminViewCars: React.FC = () => {
           <div className={styles.popupContent}>
             <span className={styles.close} onClick={() => setIsEditing(false)}>&times;</span>
             <h2>Edit Vehicle</h2>
-            <form onSubmit={handleUpdate}>
-              <div className={styles.popupformcontrols}>
-                <div className={styles.controlandlabel}>
-                  <span>Make:</span>
-                  <input
+            <form onSubmit={handleUpdate} className={styles.form}>
+              <table className={styles.table}>
+                <tr>
+                  <td>Make :</td>
+                  <td><input
                      className={styles.popupinput}
                     readOnly
                     type="text" 
                     value={selectedVehicle.make} 
                     onChange={(e) => setSelectedVehicle({ ...selectedVehicle, make: e.target.value })} 
                     required 
-                  />
-                </div>
+                  /></td>
+                </tr>
 
-                <div className={styles.controlandlabel}>
-                  <span>Model:</span>
-                  <input
+                <tr>
+                  <td>Model :</td>
+                  <td><input
                      className={styles.popupinput}
                     readOnly
                     type="text" 
                     value={selectedVehicle.model} 
                     onChange={(e) => setSelectedVehicle({ ...selectedVehicle, model: e.target.value })} 
                     required 
-                  />
-                </div>
+                  /></td>
+                </tr>
 
-                <div className={styles.controlandlabel}>
-                  <span>Year:</span>
-                  <input
+                <tr>
+                  <td>Year :</td>
+                  <td><input
                     className={styles.popupinput}
                     readOnly 
                     type="text"  // Change type to text
                     value={selectedVehicle.year.toString()}  // Convert number to string
                     onChange={(e) => setSelectedVehicle({ ...selectedVehicle, year: String(e.target.value) })} 
                     required 
-                  />
-                </div>
+                  /></td>
 
+                </tr>
 
-                <div className={styles.controlandlabel}>
-                  <span>Price:</span>
-                  <input
+                <tr>
+                  <td>Price :</td>
+                  <td><input
                     className={styles.popupinput}
                     type="number" 
                     value={selectedVehicle.price} 
                     onChange={(e) => setSelectedVehicle({ ...selectedVehicle, price: Number(e.target.value) })} 
                     required 
-                  />
-                </div>
+                  /></td>
+                </tr>
 
-                <div className={styles.controlandlabel}>
-                  <span>Quantity:</span>
-                  <input
+                <tr>
+                  <td>Qunatity :</td>
+                  <td><input
                     className={styles.popupinput}
                     type="number" 
                     value={selectedVehicle.quantity} 
                     onChange={(e) => setSelectedVehicle({ ...selectedVehicle, quantity: Number(e.target.value) })} 
                     required 
-                  />
-                </div>
-
-                <div className={styles.controlandlabel}>
-                  <span>Description:</span>
-                  <textarea 
+                  /></td>
+                </tr>
+                
+                <tr>
+                  <td>Description :</td>
+                  <td><textarea 
                     className={styles.popuptextarea}
                     value={selectedVehicle.description} 
                     onChange={(e) => setSelectedVehicle({ ...selectedVehicle, description: e.target.value })} 
                     required 
-                  />
-                </div>
+                  /></td>
+                </tr>
+
+
+              </table>
+              <div className={styles.popupformcontrols}>
 
                 <button type="submit" className= {styles.updateButton}>Update Vehicle</button>
               </div>

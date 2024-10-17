@@ -209,6 +209,19 @@
     -webkit-backdrop-filter: blur(10px); /* For better support on older browsers */
   }
 
+  .form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .table{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+  }
+
   .popupformcontrols{
     margin: 10px;
     display: flex;
@@ -287,5 +300,33 @@
 
 
   /* Loader */
-  
+/* Mobile view */
+@media only screen and (max-width: 768px) {
+
+  .cardContainer{
+    max-width: 100%;
+  }
+  .input{
+    max-width: 50%;
+    border: 1px solid rgb(0, 89, 255);
+    margin-right: 10px;
+  }
+  .vehicleCardContainer{
+    /* max-width: 100%; */
+    max-width: 92%;
+    /* margin: 0; */
+  }
+  .cardImage, .popup{
+    max-width: 100%;
+
+  }
+  .popupContent{
+    max-width: 100%;
+    font-size: 12px;
+    text-wrap: nowrap;
+  }
+
+}
+
+
   
