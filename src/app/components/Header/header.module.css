@@ -143,13 +143,14 @@
 }
 
 .sideBar {
-    background-color: rgba(210, 210, 210, 0.717);
+    background-color: rgb(255, 255, 255);
     display: none;
     flex-direction: column;
     width: 300px;
     height: 543px;
+    min-height: 100vh;
     padding: 56px 32px;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     z-index: 10;
