@@ -464,7 +464,7 @@ const Booking: React.FC = () => {
           alt={`${data?.getVehicleDetailsById?.make} ${data?.getVehicleDetailsById?.model}`}
           className={styles.vehicleImage}
         />
-        <div className={styles.imageSlider}>
+        {/* <div className={styles.imageSlider}>
           {Array.isArray(data?.getVehicleDetailsById?.additionalImageUrls) && data?.getVehicleDetailsById?.additionalImageUrls.length > 0 ? (
             data?.getVehicleDetailsById?.additionalImageUrls.map((img, index) => (
               <img
@@ -478,7 +478,36 @@ const Booking: React.FC = () => {
           ) : (
             <p>No additional images available</p>
           )}
-        </div>
+        </div> */}
+        <div className={styles.imageSlider}>
+  {/* Display primary image if available */}
+  {data?.getVehicleDetailsById?.primaryImageUrl ? (
+    <img
+      src={data.getVehicleDetailsById.primaryImageUrl}
+      alt={`${data?.getVehicleDetailsById?.make} ${data?.getVehicleDetailsById?.model} - Primary Image`}
+      className={styles.thumbnailImage}
+      onClick={() => setSelectedImage(data.getVehicleDetailsById.primaryImageUrl)}
+    />
+  ) : (
+    <p>No primary image available</p>
+  )}
+
+  {/* Display additional images if available */}
+  {Array.isArray(data?.getVehicleDetailsById?.additionalImageUrls) && data?.getVehicleDetailsById?.additionalImageUrls.length > 0 ? (
+    data?.getVehicleDetailsById?.additionalImageUrls.map((img, index) => (
+      <img
+        key={index}
+        src={img}
+        alt={`${data?.getVehicleDetailsById?.make} ${data?.getVehicleDetailsById?.model} - Image ${index + 1}`}
+        className={styles.thumbnailImage}
+        onClick={() => setSelectedImage(img)}
+      />
+    ))
+  ) : (
+    <p>No additional images available</p>
+  )}
+</div>
+
         </div>
       </div>
         

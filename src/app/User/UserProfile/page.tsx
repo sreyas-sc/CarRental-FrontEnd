@@ -162,6 +162,46 @@ const UserProfile: React.FC = () => {
     XLSX.writeFile(workbook, 'user-bookings.xlsx');
   };
 
+  // const columns = [
+  //   {
+  //     title: <Checkbox onChange={e => {
+  //       setSelectedRowKeys(e.target.checked ? bookings.map(booking => booking.id) : []);
+  //     }} />,
+  //     dataIndex: 'checkbox',
+  //     render: (_: any, record: Booking) => (
+  //       <Checkbox
+  //         checked={selectedRowKeys.includes(record.id)}
+  //         onChange={() => handleRowSelectionChange(
+  //           selectedRowKeys.includes(record.id)
+  //             ? selectedRowKeys.filter(key => key !== record.id)
+  //             : [...selectedRowKeys, record.id]
+  //         )}
+  //       />
+  //     ),
+  //   },
+  //   {
+  //     title: 'Start Date',
+  //     dataIndex: 'startDate',
+  //   },
+  //   {
+  //     title: 'End Date',
+  //     dataIndex: 'endDate',
+  //   },
+  //   {
+  //     title: 'Car Model',
+  //     render: (text: any, record: Booking) => `${record.vehicle.make} ${record.vehicle.model}`,
+  //   },
+  //   {
+  //     title: 'Status',
+  //     dataIndex: 'status',
+  //   },
+  //   {
+  //     title: 'Total Price',
+  //     dataIndex: 'totalPrice',
+  //     render: (text: string) => `₹${text}`,
+  //   },
+  // ];
+
   const columns = [
     {
       title: <Checkbox onChange={e => {
@@ -189,7 +229,14 @@ const UserProfile: React.FC = () => {
     },
     {
       title: 'Car Model',
-      render: (text: any, record: Booking) => `${record.vehicle.make} ${record.vehicle.model}`,
+      render: (text: any, record: Booking) => {
+        // Check if the vehicle is available
+        if (record.vehicle) {
+          return `${record.vehicle.make} ${record.vehicle.model}`;
+        } else {
+          return 'Vehicle Deleted'; // Return a placeholder if the vehicle is not available
+        }
+      },
     },
     {
       title: 'Status',
@@ -201,7 +248,7 @@ const UserProfile: React.FC = () => {
       render: (text: string) => `₹${text}`,
     },
   ];
-
+  
   const handlePageChange = (page: number, pageSize?: number) => {
     setCurrentPage(page);
     if (pageSize) setPageSize(pageSize);
