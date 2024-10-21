@@ -151,12 +151,12 @@ export const ADD_VEHICLE_MUTATION = gql`
 // Update the rentable vehicles
 export const UPDATE_RENTABLE_VEHICLE = gql`
   mutation updateRentableVehicle(
-      $id: ID
-      $make: String!
-      $model: String!
-      $year: String!
-      $price: Float!
-      $quantity: Int!
+      $id: ID!
+      $make: String
+      $model: String
+      $year: String
+      $price: Float
+      $quantity: Int
       $description: String
       $primaryImage: Upload
       $additionalImages: [Upload]
@@ -169,21 +169,25 @@ export const UPDATE_RENTABLE_VEHICLE = gql`
       price: $price,
       quantity: $quantity,
       description: $description,
-      primaryImage: $primaryImage
+      primaryImage: $primaryImage,
       additionalImages: $additionalImages
     ) {
-      
-      make
-      model
-      year
-      price
-      quantity
-      description
-      primaryImageUrl
-      additionalImageUrls
+      success
+      message
+      vehicle {
+        make
+        model
+        year
+        price
+        quantity
+        description
+        primaryImageUrl
+        additionalImageUrls
+      }
     }
   }
 `;
+
 
 // To get all the vehicles
 export const GET_ALL_VEHICLES_MUTATION = gql`

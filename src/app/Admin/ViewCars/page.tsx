@@ -45,6 +45,7 @@ interface UpdateRentableVehicleResponse {
 }
 
 const AdminViewCars: React.FC = () => {
+  const [newPrimaryImageUrl, setNewPrimaryImageUrl] = useState<string>('');
   const { loading, error, data } = useQuery<GetRentableVehiclesResponse>(GET_RENTABLE_VEHICLES);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [filter, setFilter] = useState<string>('');
@@ -63,6 +64,20 @@ const AdminViewCars: React.FC = () => {
     },
   });
 
+
+  useEffect(() => {
+    // const cards = document.querySelectorAll('.card');
+    const cards = document.querySelectorAll('.card') as NodeListOf<HTMLElement>;
+
+    const heights = Array.from(cards).map(card => card.clientHeight);
+    const maxHeight = Math.max(...heights);
+
+    cards.forEach(card => {
+      card.style.height = `${maxHeight}px`;
+  });
+}, [vehicles]); 
+
+
   useEffect(() => {
     if (!loading && data?.getRentableVehicles) {
       setVehicles(data.getRentableVehicles);
@@ -74,8 +89,14 @@ const AdminViewCars: React.FC = () => {
   <p>Loading...</p>;
   if (error) return <p>Error fetching vehicles: {error.message}</p>;
 
+  // const handleEdit = (vehicle: Vehicle) => {
+  //   setSelectedVehicle(vehicle);
+  //   setIsEditing(true);
+  // };
+
   const handleEdit = (vehicle: Vehicle) => {
     setSelectedVehicle(vehicle);
+    setNewPrimaryImageUrl(vehicle.primaryImageUrl || '');
     setIsEditing(true);
   };
 
@@ -114,7 +135,6 @@ const AdminViewCars: React.FC = () => {
     const { id, make, model, year, price, quantity, availability, transmission, fuel_type, seats,  description } = selectedVehicle;   
   
     try {
-      console.log("make is", make)
       const response = await updateRentableVehicle({
         variables: { 
           id, 
@@ -128,6 +148,7 @@ const AdminViewCars: React.FC = () => {
           fuel_type: String(fuel_type),
           seats: Number(seats),
           description,  // New description
+          primaryImageUrl: newPrimaryImageUrl
         },
         
       });
@@ -239,6 +260,14 @@ const AdminViewCars: React.FC = () => {
             <span className={styles.close} onClick={() => setIsEditing(false)}>&times;</span>
             <h2>Edit Vehicle</h2>
             <form onSubmit={handleUpdate} className={styles.form}>
+            <div className={styles.imagePreview}>
+                {/* <h3>Primary Image Preview:</h3> */}
+                <img 
+                  src={newPrimaryImageUrl || 'https://via.placeholder.com/150'} 
+                  alt="Primary vehicle image preview" 
+                  style={{ maxWidth: '200px', maxHeight: '200px' }}
+                />
+              </div>
               <table className={styles.table}>
                 <tr>
                   <td>Make :</td>
@@ -311,6 +340,7 @@ const AdminViewCars: React.FC = () => {
 
 
               </table>
+              
               <div className={styles.popupformcontrols}>
 
                 <button type="submit" className= {styles.updateButton}>Update Vehicle</button>

@@ -11,24 +11,24 @@
 .vehicleCardContainer {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: stretch;
     gap: 20px;
     
 }
 
 .card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    color: #434343;
-    overflow: hidden;
-    width: 400px; 
-    max-width: 400px; 
-    min-height: 500px; 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: space-between;
-    transition: transform 0.2s;
-    align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: #434343;
+  overflow: hidden;
+  width: 400px; 
+  max-width: 400px; 
+  min-height: 500px; /* Minimum height */
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between;
+  transition: transform 0.2s;
+  align-items: center;
 }
 
 .card:hover {

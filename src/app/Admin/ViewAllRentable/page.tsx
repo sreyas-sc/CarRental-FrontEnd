@@ -239,14 +239,6 @@ const ViewAllCarsPage: React.FC = () => {
         <h1 className={styles.mainhead}>Find Your Perfect Ride</h1>
         <p className={styles.description}>Explore our wide range of vehicles for rent</p>
       </div>
-
-
-      {/* {selectedStartDate && selectedEndDate && (
-    <div className={styles.selectedDates}>
-      <p>Selected Dates: {selectedStartDate} to {selectedEndDate}</p>
-      <button onClick={openDatePopup} className={styles.changeDateButton}>Change Dates</button>
-    </div>
-  )}   */}
       
     <div className={styles.selectedDates}>
       <p className={styles.selecteddatep}>Selected Dates: {selectedStartDate} to {selectedEndDate}</p>

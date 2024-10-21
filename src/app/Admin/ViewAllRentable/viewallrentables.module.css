@@ -426,6 +426,13 @@ font-weight: 700;
   right: 10px;
 }
 
+.noVehiclesContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 @media only screen and (max-width: 486px) {
 
   .mainhead{

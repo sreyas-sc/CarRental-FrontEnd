@@ -43,6 +43,7 @@ const UserProfile: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
   const [isChangePasswordModalVisible, setIsChangePasswordModalVisible] = useState(false);
   const [file, setFile] = useState(null);
 
@@ -121,13 +122,10 @@ const UserProfile: React.FC = () => {
   const avatarMenu = (
     <Menu>
       <Menu.Item key="1" icon={<CameraOutlined />}>
-        <Upload customRequest={handleImageUpload} showUploadList={false} accept="image/*">
+        <Upload customRequest={handleImageUpload} showUploadList={false} accept=".png,.jpg,.jpeg">
           <span>Upload Image</span>
         </Upload>
       </Menu.Item>
-      {/* <Menu.Item key="2" icon={<DeleteOutlined />} >
-        <span>Delete Image</span>
-      </Menu.Item> */}
     </Menu>
   );
 
@@ -161,46 +159,6 @@ const UserProfile: React.FC = () => {
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Bookings');
     XLSX.writeFile(workbook, 'user-bookings.xlsx');
   };
-
-  // const columns = [
-  //   {
-  //     title: <Checkbox onChange={e => {
-  //       setSelectedRowKeys(e.target.checked ? bookings.map(booking => booking.id) : []);
-  //     }} />,
-  //     dataIndex: 'checkbox',
-  //     render: (_: any, record: Booking) => (
-  //       <Checkbox
-  //         checked={selectedRowKeys.includes(record.id)}
-  //         onChange={() => handleRowSelectionChange(
-  //           selectedRowKeys.includes(record.id)
-  //             ? selectedRowKeys.filter(key => key !== record.id)
-  //             : [...selectedRowKeys, record.id]
-  //         )}
-  //       />
-  //     ),
-  //   },
-  //   {
-  //     title: 'Start Date',
-  //     dataIndex: 'startDate',
-  //   },
-  //   {
-  //     title: 'End Date',
-  //     dataIndex: 'endDate',
-  //   },
-  //   {
-  //     title: 'Car Model',
-  //     render: (text: any, record: Booking) => `${record.vehicle.make} ${record.vehicle.model}`,
-  //   },
-  //   {
-  //     title: 'Status',
-  //     dataIndex: 'status',
-  //   },
-  //   {
-  //     title: 'Total Price',
-  //     dataIndex: 'totalPrice',
-  //     render: (text: string) => `₹${text}`,
-  //   },
-  // ];
 
   const columns = [
     {
@@ -264,15 +222,18 @@ const UserProfile: React.FC = () => {
       const values = await form.validateFields();
       const { data } = await updateUser({ variables: { id: user.id, ...values } });
       setUser(data.updateUser);
-      setIsEditModalVisible(false);
-      // Update session storage with new user data
       sessionStorage.setItem('user', JSON.stringify(data.updateUser));
+      setIsEditModalVisible(false);
+      setEditError(null); // Clear any previous error
+      message.success('User details updated successfully');
     } catch (error) {
-      console.error('Failed to update user:', error);
+      const apolloError = error as ApolloError; // Explicitly casting the error to ApolloError
+      const errorMessage = apolloError.graphQLErrors?.[0]?.message || 'Failed to update user';
+      setEditError(errorMessage); // Set the error message in state
     }
   };
-
   
+
 
   const showChangePasswordModal = () => {
     passwordForm.resetFields();
@@ -409,24 +370,25 @@ const UserProfile: React.FC = () => {
         onCancel={() => setIsEditModalVisible(false)}
       >
         <Form form={form} layout="vertical">
-          <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
-            <Input readOnly />
+        <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Name is required' }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
+          <Input readOnly />
         </Form.Item>
         <Form.Item name="phone" label="Phone" rules={[{ required: true }]}>
-            <Input readOnly />
+          <Input readOnly />
         </Form.Item>
-          <Form.Item name="city" label="City">
-            <Input />
-          </Form.Item>
-          <Form.Item name="state" label="State">
-            <Input />
-          </Form.Item>
-          <Form.Item name="country" label="Country">
-            <Input />
-          </Form.Item>
+        <Form.Item name="city" label="City">
+          <Input />
+        </Form.Item>
+        <Form.Item name="state" label="State">
+          <Input />
+        </Form.Item>
+        <Form.Item name="country" label="Country">
+          <Input />
+        </Form.Item>
+        {editError && <div style={{ color: 'red', marginBottom: 16 }}>{editError}</div>} {/* Display error here */}
         </Form>
         <Button onClick={showChangePasswordModal}>Change Password</Button>
       </Modal>

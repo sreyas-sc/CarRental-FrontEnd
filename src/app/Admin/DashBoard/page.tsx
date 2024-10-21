@@ -2,6 +2,9 @@ import Image from 'next/image';
 import React, { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import styles from './admin-dashboard.module.css';
+import Swal from 'sweetalert2';
+import { useRouter } from "next/navigation";
+
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -10,9 +13,35 @@ interface DashboardLayoutProps {
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
+
+  const [isAdmin, setIsAdmin] = useState<boolean>(false); // State to check if user is admin
+  const [isUser, setIsUser] = useState<boolean>(false); // State to check if user is a regular user
+  const router = useRouter();
+
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You will be logged out of your account!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, logout!',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.isConfirmed) {
+      // Clear session storage
+      sessionStorage.clear();
+      setIsAdmin(false); // Update state after logout
+      setIsUser(false); // Reset user state after logout
+      router.push('/'); // Redirect to home
+    }
+  };
+
+  
 
   return (
     <div className={styles.container}>
@@ -52,7 +81,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
         {/* Logout Button */}
         <div className={styles.dashboardbuttonslogout}>
-          <button className={styles.dashlogoutButton}>Logout</button>
+          <Link href="/" passHref>
+              <button className={styles.dashlogoutButton} onClick={handleLogout} >Logout</button>
+            </Link>
         </div>
       </div>
 

@@ -48,9 +48,9 @@ function Navbar() {
       confirmButtonText: 'Yes, logout!',
       cancelButtonText: 'Cancel'
     });
+    
 
     if (result.isConfirmed) {
-      // Clear session storage
       sessionStorage.clear();
       setIsAdmin(false); // Update state after logout
       setIsUser(false); // Reset user state after logout
