@@ -51,14 +51,7 @@ const AddRentableVehicles: React.FC = () => {
     }
   }, [selectedMake, getModels]);
 
-  // const handleAdditionalImageChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-  //   if (e.target.files && e.target.files.length > 0) {
-  //     const file = e.target.files[0];
-  //     const updatedImages = [...additionalImages];
-  //     updatedImages[index] = file;
-  //     setAdditionalImages(updatedImages);
-  //   }
-  // };
+ 
   const handlePrimaryImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     if (file) {
@@ -70,11 +63,6 @@ const AddRentableVehicles: React.FC = () => {
       reader.readAsDataURL(file);
     }
   };
-
-  // const handlePrimaryImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0] || null;
-  //   setPrimaryImage(file);
-  // };
 
   const handleAdditionalImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
