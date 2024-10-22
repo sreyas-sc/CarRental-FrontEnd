@@ -96,6 +96,15 @@
   cursor: pointer;
 }
 
+.imageremovebutton{
+  color: #000000;
+  font-size: 15px;
+}
+.imageremovebutton:hover{
+  color: red;
+  font-size: 22px;
+}
+
 .inputfields:focus {
     outline: none; /* Remove default outline */
     border: 2px solid #007BFF; /* Highlight border on focus */

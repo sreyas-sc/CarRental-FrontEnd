@@ -24,6 +24,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 40px;
+    gap:10px;
   }
   
 
@@ -105,6 +106,12 @@
   @media (max-width: 768px) {
     .container {
       padding: 1rem;
+      /* background-color: #1890ff; */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
     }
   
     .title {
@@ -113,7 +120,8 @@
   
     .buttonsContainer {
       flex-direction: column;
-      align-items: stretch;
+      align-items: center;
+      justify-content: center;
       gap: 10px;
     }
   
@@ -124,14 +132,34 @@
   
     .filters {
       flex-direction: column;
+
     }
   
     .filterInput {
       margin-bottom: 0.5rem;
     }
-  
+    
+    .tableContainer{
+      margin-left: -15px;
+      /* background-color: #01e056; */
+      width: 480px;
+      overflow-x: auto;
+      margin-right: 5px;
+
+      /* padding: 10px; */
+      /* margin: 10px; */
+    }
     .table {
       font-size: 0.9rem;
+      width:40px;
+      /* margin: 10px; */
+      /* display: none; */
+    }
+    .tableHeader{
+      max-width: 100%;
+    }
+    .tableBody{
+      max-width: 100%;
     }
   
     .pagination {

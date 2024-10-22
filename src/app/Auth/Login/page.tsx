@@ -53,12 +53,6 @@ const Login = () => {
       });
     } catch (err) {
       console.error(err);
-      // Handle error (e.g., display a notification)
-      Swal.fire({
-        icon: 'error',
-        title: 'Login Failed',
-        text: error?.message || 'Check Login Credentials again',
-      });
     }
   };
 
@@ -82,7 +76,7 @@ const Login = () => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
+            // required
           />
           <input
             type="password"
@@ -90,12 +84,13 @@ const Login = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
+            // required
           />
           <button className={styles.loginbutton} type="submit" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
           {error && <p className={styles.error}>{error.message}</p>}
+               
           <p className={styles.registertext}>Do not have an account?</p>
           <Link href="/Auth/Register" legacyBehavior passHref>
             <p className={styles.registerlink}>Register</p>

@@ -241,30 +241,32 @@ const ViewBookings: React.FC = () => {
           className={styles.filterInput}
         />
       </div>
-      <table className={styles.table}>
-        <thead className={styles.tableHeader}>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Pick up Date</th>
-            <th>Drop off Date</th>
-            <th>Car Model</th>
-            <th>Total Price</th>
-          </tr>
-        </thead>
-        <tbody className={styles.tableBody}>
-          {currentItems.map((booking) => (
-            <tr key={booking.id} className={styles.tableRow}>
-              <td>{booking.user?.name || 'N/A'}</td>
-              <td>{booking.user?.email || 'N/A'}</td>
-              <td>{booking.startDate}</td>
-              <td>{booking.endDate}</td>
-              <td>{`${booking.vehicle.make} ${booking.vehicle.model}`}</td>
-              <td>{`₹${booking.totalPrice}`}</td>
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
+          <thead className={styles.tableHeader}>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Pick up Date</th>
+              <th>Drop off Date</th>
+              <th>Car Model</th>
+              <th>Total Price</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className={styles.tableBody}>
+            {currentItems.map((booking) => (
+              <tr key={booking.id} className={styles.tableRow}>
+                <td>{booking.user?.name || 'N/A'}</td>
+                <td>{booking.user?.email || 'N/A'}</td>
+                <td>{booking.startDate}</td>
+                <td>{booking.endDate}</td>
+                <td>{`${booking.vehicle.make} ${booking.vehicle.model}`}</td>
+                <td>{`₹${booking.totalPrice}`}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <div className={styles.pagination}>
         {Array.from({ length: Math.ceil(filteredBookings.length / itemsPerPage) }, (_, i) => (
           <button

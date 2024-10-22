@@ -5,6 +5,7 @@ import styles from './add-rentable-vehicles.module.css';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { ADD_RENTABLE_VEHICLE_MUTATION, GET_ALL_MAKES, GET_MODELS_BY_MAKE } from '@/graphql/mutations';
 import Swal from 'sweetalert2';
+import { MdDelete } from "react-icons/md"
 
 
 const AddRentableVehicles: React.FC = () => {
@@ -228,9 +229,9 @@ const AddRentableVehicles: React.FC = () => {
                   <option value="" disabled>
                     Select Fuel Type
                   </option>
-                  <option value="Manual">Petrol</option>
-                  <option value="Automatic">Diesel</option>
-                  <option value="Semi-Automatic">Electiric</option>
+                  <option value="Petrol">Petrol</option>
+                  <option value="Diesel">Diesel</option>
+                  <option value="Electric">Electiric</option>
                 </select>
               </div>
               {/* Number of Seats Input */}
@@ -322,8 +323,8 @@ const AddRentableVehicles: React.FC = () => {
             {additionalImagePreviews.map((preview, index) => (
               <div key={index} className={styles.previewContainer}>
                 <img src={preview} alt={`Additional ${index + 1}`} />
-                <button type="button" onClick={() => handleRemoveAdditionalImage(index)}>
-                  Remove
+                <button type="button" onClick={() => handleRemoveAdditionalImage(index)} className={styles.imageremovebutton}>
+                  <MdDelete/>
                 </button>
               </div>
             ))}

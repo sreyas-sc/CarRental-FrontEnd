@@ -1,10 +1,9 @@
 .login {
-    position: relative; /* Necessary to position the ::before pseudo-element */
+    position: relative; 
     width: 100%;
     height: 100vh; /* Full viewport height */
-    /* background-color: #051C34; Fallback background color */
     background: rgb(134,139,235);
-background: radial-gradient(circle, rgba(134,139,235,1) 0%, rgba(255,254,254,1) 86%);
+    background: radial-gradient(circle, rgba(134,139,235,1) 0%, rgba(255,254,254,1) 86%);
     background-size: contain; /* Control image size */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* No repeat */
@@ -29,6 +28,7 @@ background: radial-gradient(circle, rgba(134,139,235,1) 0%, rgba(255,254,254,1) 
   .loginform{
     width: 500px;
     height: 70%;
+    min-height: fit-content;
     background-color: rgba(30, 29, 29, 0.836);
     border-radius: 20px;
     display: flex;
@@ -56,6 +56,11 @@ background: radial-gradient(circle, rgba(134,139,235,1) 0%, rgba(255,254,254,1) 
   gap: 40px;
   width: 80%;
   align-items: center;
+}
+
+.error{
+  color: red;
+  
 }
 
 .emailinput{
@@ -104,5 +109,6 @@ background: radial-gradient(circle, rgba(134,139,235,1) 0%, rgba(255,254,254,1) 
   margin-top: -10px;
   color: rgb(71, 71, 71);
   cursor: pointer;
+  margin-bottom: 20px;
 }
   

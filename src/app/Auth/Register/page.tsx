@@ -1,143 +1,81 @@
-// 'use client';  // This ensures that this component runs as a client component
-
-// import React, { useState } from 'react';
-// import styles from './register-page.module.css';
-// import Image from 'next/image';
-// import { useMutation } from '@apollo/client'; 
-// import { REGISTER_MUTATION } from '@/graphql/mutations';  // Ensure this points to the correct mutation file
-// import Link from 'next/link';
-
-// const Register = () => {
-//   const [register, { loading }] = useMutation(REGISTER_MUTATION);  // Use REGISTER_MUTATION with useMutation
-
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     email: '',
-//     phone: '',
-//     city: '',
-//     state: '',
-//     country: '',
-//     password: ''
-//   });
-
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     setFormData({ ...formData, [e.target.name]: e.target.value });
-//   };
-
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-
-//     try {
-//       const { data } = await register({
-//         variables: formData  // Pass formData as variables
-//       });
-//       alert(`User ${data.register.name} registered successfully!`);
-//     } catch (error) {
-//       alert(`Error: ${error}`);
-//     }
-//   };
-
-//   return (
-//     <div className={styles.login}>
-//       <div className={styles.loginform}>
-//         <div className={styles.cardcarimagecontainer}>
-//           <Image
-//             src="/icons/brandlogo.svg"
-//             layout="responsive"
-//             width={10}
-//             height={10}
-//             alt="Welcome Car"
-//           />
-//         </div>
-//         <span className={styles.logintext}>Register</span>
-//         <form onSubmit={handleSubmit} className={styles.form}>
-//           <div className={styles.inputfields}>
-//             <input
-//               type='text'
-//               name="name"
-//               className={styles.emailinput}
-//               placeholder='Name'
-//               value={formData.name}
-//               onChange={handleChange}
-//               required
-//             />
-//             <input
-//               type="email"
-//               name="email"
-//               className={styles.emailinput}
-//               placeholder='Email'
-//               value={formData.email}
-//               onChange={handleChange}
-//               required
-//             />
-//             <input
-//               type='number'
-//               name="phone"
-//               className={styles.phoneinput}
-//               placeholder='Phone'
-//               value={formData.phone}
-//               onChange={handleChange}
-//               required
-//             />
-//             <input
-//               type='text'
-//               name="city"
-//               className={styles.emailinput}
-//               placeholder='City'
-//               value={formData.city}
-//               onChange={handleChange}
-//               required
-//             />
-//             <input
-//               type='text'
-//               name="state"
-//               className={styles.emailinput}
-//               placeholder='State'
-//               value={formData.state}
-//               onChange={handleChange}
-//               required
-//             />
-//             <input
-//               type='text'
-//               name="country"
-//               className={styles.emailinput}
-//               placeholder='Country'
-//               value={formData.country}
-//               onChange={handleChange}
-//               required
-//             />
-//             <input
-//               type='password'
-//               name="password"
-//               className={styles.passwordinput}
-//               placeholder='Password'
-//               value={formData.password}
-//               onChange={handleChange}
-//               required
-//             />
-//             <button className={styles.registerbutton} disabled={loading}>
-//               {loading ? 'Registering...' : 'Register'}
-//             </button>
-//             <p className={styles.logintext}>Do not have an account?</p>
-//             <Link href="/Auth/Login" legacyBehavior passHref>
-//               <p className={styles.loginlink}>Login</p>
-//             </Link>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Register;
 'use client';
 
 import React, { useState } from 'react';
+import Joi from 'joi';
 import styles from './register-page.module.css';
 import Image from 'next/image';
 import { useMutation } from '@apollo/client';
 import { REGISTER_MUTATION, SEND_OTP_MUTATION, VERIFY_OTP_MUTATION } from '@/graphql/mutations';
 import Link from 'next/link';
+
+// Validation schema
+const registerSchema = Joi.object({
+  name: Joi.string()
+    .min(2)
+    .max(50)
+    .required()
+    .messages({
+      'string.empty': 'Name is required',
+      'string.min': 'Name must be at least 2 characters long',
+      'string.max': 'Name cannot exceed 50 characters'
+    }),
+    
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({
+      'string.empty': 'Email is required',
+      'string.email': 'Please enter a valid email address'
+    }),
+    
+  phone: Joi.string()
+    .pattern(/^[0-9]{10}$/)
+    .required()
+    .messages({
+      'string.empty': 'Phone number is required',
+      'string.pattern.base': 'Please enter a valid 10-digit phone number'
+    }),
+    
+  city: Joi.string()
+    .min(2)
+    .max(50)
+    .required()
+    .messages({
+      'string.empty': 'City is required',
+      'string.min': 'City must be at least 2 characters long',
+      'string.max': 'City cannot exceed 50 characters'
+    }),
+    
+  state: Joi.string()
+    .min(2)
+    .max(50)
+    .required()
+    .messages({
+      'string.empty': 'State is required',
+      'string.min': 'State must be at least 2 characters long',
+      'string.max': 'State cannot exceed 50 characters'
+    }),
+    
+  country: Joi.string()
+    .min(2)
+    .max(50)
+    .required()
+    .messages({
+      'string.empty': 'Country is required',
+      'string.min': 'Country must be at least 2 characters long',
+      'string.max': 'Country cannot exceed 50 characters'
+    }),
+    
+  password: Joi.string()
+    .min(6)
+    // .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+    .required()
+    .messages({
+      'string.empty': 'Password is required',
+      'string.min': 'Password must be at least 6 characters long',
+      'string.pattern.base': 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+    })
+});
 
 const Register = () => {
   const [register, { loading: registerLoading }] = useMutation(REGISTER_MUTATION);
@@ -154,18 +92,64 @@ const Register = () => {
     password: ''
   });
 
+  type ValidationErrors = {
+    [key: string]: string;
+  };
+
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
   const [showOtpPopup, setShowOtpPopup] = useState(false);
   const [error, setError] = useState('');
 
+  const validateField = (name: string, value: string): string | null => {
+    const fieldSchema = Joi.object({ [name]: registerSchema.extract(name) });
+    const { error } = fieldSchema.validate({ [name]: value });
+    return error ? error.details[0].message : null;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Handle the null case explicitly
+    const errorMessage = validateField(name, value);
+    if (errorMessage) {
+      setValidationErrors(prev => ({
+        ...prev,
+        [name]: errorMessage
+      }));
+    } else {
+      // Remove the field from errors if it's valid
+      setValidationErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const validateForm = () => {
+    const { error } = registerSchema.validate(formData, { abortEarly: false });
+    if (error) {
+      const errors: { [key: string]: string } = {};
+      error.details.forEach((detail) => {
+        errors[detail.path[0]] = detail.message;
+      });
+      setValidationErrors(errors);
+      return false;
+    }
+    setValidationErrors({});
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    if (!validateForm()) {
+      return;
+    }
 
     if (!otpSent) {
       try {
@@ -221,69 +205,97 @@ const Register = () => {
         {error && <p className={styles.errorMessage}>{error}</p>}
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.inputfields}>
-            <input
-              type="text"
-              name="name"
-              className={styles.emailinput}
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              className={styles.emailinput}
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="tel"
-              name="phone"
-              className={styles.phoneinput}
-              placeholder="Phone"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="city"
-              className={styles.emailinput}
-              placeholder="City"
-              value={formData.city}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="state"
-              className={styles.emailinput}
-              placeholder="State"
-              value={formData.state}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="country"
-              className={styles.emailinput}
-              placeholder="Country"
-              value={formData.country}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              className={styles.passwordinput}
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+            <div className={styles.inputContainer}>
+              <input
+                type="text"
+                name="name"
+                className={`${styles.emailinput} ${validationErrors.name ? styles.errorInput : ''}`}
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+              {validationErrors.name && <span className={styles.errorText}>{validationErrors.name}</span>}
+            </div>
+
+            <div className={styles.inputContainer}>
+              <input
+                type="email"
+                name="email"
+                className={`${styles.emailinput} ${validationErrors.email ? styles.errorInput : ''}`}
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+              {validationErrors.email && <span className={styles.errorText}>{validationErrors.email}</span>}
+            </div>
+
+            <div className={styles.inputContainer}>
+              <input
+                type="tel"
+                name="phone"
+                className={`${styles.phoneinput} ${validationErrors.phone ? styles.errorInput : ''}`}
+                placeholder="Phone"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+              {validationErrors.phone && <span className={styles.errorText}>{validationErrors.phone}</span>}
+            </div>
+
+            <div className={styles.inputContainer}>
+              <input
+                type="text"
+                name="city"
+                className={`${styles.emailinput} ${validationErrors.city ? styles.errorInput : ''}`}
+                placeholder="City"
+                value={formData.city}
+                onChange={handleChange}
+                required
+              />
+              {validationErrors.city && <span className={styles.errorText}>{validationErrors.city}</span>}
+            </div>
+
+            <div className={styles.inputContainer}>
+              <input
+                type="text"
+                name="state"
+                className={`${styles.emailinput} ${validationErrors.state ? styles.errorInput : ''}`}
+                placeholder="State"
+                value={formData.state}
+                onChange={handleChange}
+                required
+              />
+              {validationErrors.state && <span className={styles.errorText}>{validationErrors.state}</span>}
+            </div>
+
+            <div className={styles.inputContainer}>
+              <input
+                type="text"
+                name="country"
+                className={`${styles.emailinput} ${validationErrors.country ? styles.errorInput : ''}`}
+                placeholder="Country"
+                value={formData.country}
+                onChange={handleChange}
+                required
+              />
+              {validationErrors.country && <span className={styles.errorText}>{validationErrors.country}</span>}
+            </div>
+
+            <div className={styles.inputContainer}>
+              <input
+                type="password"
+                name="password"
+                className={`${styles.passwordinput} ${validationErrors.password ? styles.errorInput : ''}`}
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              {validationErrors.password && <span className={styles.errorText}>{validationErrors.password}</span>}
+            </div>
+
             <button className={styles.registerbutton} disabled={registerLoading || otpLoading}>
               {otpSent ? 'Verify OTP and Register' : 'Send OTP'}
             </button>

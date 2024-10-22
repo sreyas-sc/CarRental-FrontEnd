@@ -143,10 +143,14 @@
 
 .priceSummary3{
     display: flex;
+    background-color: #4391df;
     flex-direction: row;
     justify-content: center;
-    color: #333;
-    padding: 10px 0px 20px 0px;
+    color: #ffffff;
+    margin-top: 10px;
+    padding: 20px 20px 20px 20px;
+    border-radius: 10px;
+    margin-bottom: 40px;
 }
 
 .detailsContaineSub{
