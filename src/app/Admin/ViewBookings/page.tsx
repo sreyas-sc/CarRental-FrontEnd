@@ -8,6 +8,8 @@ import DashboardLayout from '../DashBoard/page';
 import styles from './view-bookings.module.css';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_BOOKINGS } from '@/graphql/mutations';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+
 
 interface Booking {
   id: string;
@@ -25,6 +27,13 @@ interface Booking {
   };
 }
 
+interface ChartData {
+  name: string;
+  value: number;
+}
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+
 const ViewBookings: React.FC = () => {
   const { data, loading, error } = useQuery(GET_ALL_BOOKINGS);
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -38,6 +47,36 @@ const ViewBookings: React.FC = () => {
     endDate: '',
     carModel: '',
   });
+
+  const [activeChart, setActiveChart] = useState<'monthly' | 'vehicles' | 'revenue'>('monthly');
+
+
+  const prepareMonthlyBookings = () => {
+    const monthlyData: { [key: string]: number } = {};
+    filteredBookings.forEach(booking => {
+      const month = new Date(booking.startDate).toLocaleString('default', { month: 'short' });
+      monthlyData[month] = (monthlyData[month] || 0) + 1;
+    });
+    return Object.entries(monthlyData).map(([name, value]) => ({ name, value }));
+  };
+
+  const prepareVehicleDistribution = () => {
+    const vehicleData: { [key: string]: number } = {};
+    filteredBookings.forEach(booking => {
+      const model = `${booking.vehicle.make} ${booking.vehicle.model}`;
+      vehicleData[model] = (vehicleData[model] || 0) + 1;
+    });
+    return Object.entries(vehicleData).map(([name, value]) => ({ name, value }));
+  };
+
+  const prepareRevenueData = () => {
+    const revenueData: { [key: string]: number } = {};
+    filteredBookings.forEach(booking => {
+      const month = new Date(booking.startDate).toLocaleString('default', { month: 'short' });
+      revenueData[month] = (revenueData[month] || 0) + parseInt(booking.totalPrice);
+    });
+    return Object.entries(revenueData).map(([name, value]) => ({ name, value }));
+  };
 
   useEffect(() => {
     if (data && data.getAllBookings) {
@@ -120,6 +159,13 @@ const ViewBookings: React.FC = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>View Bookings</h1>
+
+
+       {/* Charts Section */}
+       
+
+
+
       <div className={styles.buttonsContainer}>
 
         <button onClick={exportToPDF} className={styles.exportButton}>
@@ -278,6 +324,76 @@ const ViewBookings: React.FC = () => {
           </button>
         ))}
       </div>
+
+          {/* Chart Contanier */}
+          <div className={styles.chartControls}>
+  <button 
+    className={`chart-button ${activeChart === 'monthly' ? 'active' : ''}`}
+    onClick={() => setActiveChart('monthly')}
+  >
+    Monthly Bookings
+  </button>
+  <button 
+    className={`chart-button ${activeChart === 'vehicles' ? 'active' : ''}`}
+    onClick={() => setActiveChart('vehicles')}
+  >
+    Vehicle Distribution
+  </button>
+  <button 
+    className={`chart-button ${activeChart === 'revenue' ? 'active' : ''}`}
+    onClick={() => setActiveChart('revenue')}
+  >
+    Revenue Trends
+  </button>
+
+  <div className={styles.chartsContainer}>
+    <div className="chart-display">
+      {activeChart === 'monthly' && (
+        <BarChart width={600} height={300} data={prepareMonthlyBookings()}
+          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="value" fill="#8884d8" name="Bookings" />
+        </BarChart>
+      )}
+
+      {activeChart === 'vehicles' && (
+        <PieChart width={400} height={400}>
+          <Pie
+            data={prepareVehicleDistribution()}
+            cx={200}
+            cy={200}
+            labelLine={false}
+            outerRadius={150}
+            fill="#8884d8"
+            dataKey="value"
+            label={({ name, value }) => `${name}: ${value}`}
+          >
+            {prepareVehicleDistribution().map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      )}
+
+      {activeChart === 'revenue' && (
+        <LineChart width={600} height={300} data={prepareRevenueData()}
+          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="value" stroke="#8884d8" name="Revenue (₹)" />
+        </LineChart>
+      )}
+    </div>
+  </div>
+</div>
     </div>
   );
 };

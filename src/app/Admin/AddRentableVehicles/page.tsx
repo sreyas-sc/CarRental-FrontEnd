@@ -20,7 +20,7 @@ const AddRentableVehicles: React.FC = () => {
   const [description, setDescription] = useState<string>('');
   const [selectedTransmission, setSelectedTransmission] = useState<string>('');
   const [selectedFuelType, setSelectedFuelType] = useState<string>('');
-  const [seats, setSeats] = useState<number>(1);
+  const [seats, setSeats] = useState<number>();
 
 
 
@@ -238,10 +238,15 @@ const AddRentableVehicles: React.FC = () => {
               <div>
                 <input
                   type="number"
+                  max={10}
+                  min={1}
                   placeholder="Number of Seats"
                   value={seats}
-                  onChange={(e) => setSeats(Number(e.target.value))}
-                  min="1"
+                  // onChange={(e) => setSeats(Number(e.target.value))}
+                  onChange={(e) => {
+                    const value = Math.max(1, Math.min(10, Number(e.target.value))); // Ensure value stays between 1 and 10
+                    setSeats(value);
+                  }}
                   className={styles.inputfields}
                 />
               </div>

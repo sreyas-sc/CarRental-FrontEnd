@@ -53,7 +53,7 @@
 
 .inputfields {
     color: white; 
-    background-color: rgb(95, 133, 194);
+    background-color: rgb(67, 67, 67);
     max-width: 100%;
     min-width: 300px;
     height: 40px;
@@ -107,7 +107,7 @@
 
 .inputfields:focus {
     outline: none; /* Remove default outline */
-    border: 2px solid #007BFF; /* Highlight border on focus */
+    /* border: 2px solid #007BFF;  */
 }
 
 .inputfields::placeholder {
@@ -131,7 +131,7 @@
 
 .description:focus {
     outline: none; /* Remove default outline */
-    border: 2px solid #007BFF; /* Highlight border on focus */
+    /* border: 2px solid #007BFF;  */
 }
 
 .description::placeholder {
@@ -170,7 +170,6 @@
 
 .price:focus {
     outline: none; /* Remove default outline */
-    border: 2px solid #007BFF; /* Highlight border on focus */
 }
 
 .quantity{
@@ -186,20 +185,18 @@
 
 .quantity:focus {
     outline: none; 
-    border: 2px solid #007BFF; /* Highlight border on focus */
 }
 
 .quantity::placeholder {
     color: #aaa; /* Light gray color for the placeholder */
     opacity: 1;  /* Full opacity */
-    /* padding-left: 10px; */
 }
 
 .submitbutton{
     width: 20%;
     padding: 10px;
     margin: 10px;
-    background-color: #323ad2ce;
+    background-color: #4291f1ce;
     border-color: rgba(255, 255, 255, 0.158);
     border-radius: 10px;
 
@@ -306,7 +303,7 @@
 
   .quantityDisplay{
     outline: none; 
-    border: 2px solid #007BFF; 
+    /* border: 2px solid #007BFF;  */
   }
 
 
