@@ -84,17 +84,70 @@ const AddRentableVehicles: React.FC = () => {
   };
 
 
+  // const handleAddVehicle = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   // Basic validation
+  //   if (!selectedMake || !selectedModel || !selectedYear || price <= 0 || quantity <= 0) {
+  //     alert('Please fill all required fields and ensure price and quantity are positive numbers.');
+  //     return;
+  //   }
+
+  //   try {
+  //     console.log(selectedMake);
+  //     const { data } = await addRentableVehicle({
+  //       variables: {
+  //         input: {
+  //           make: selectedMake,
+  //           model: selectedModel,
+  //           year: selectedYear,
+  //           price: price,
+  //           quantity: quantity,
+  //           availability: availability,
+  //           transmission: selectedTransmission,
+  //           fuel_type: selectedFuelType,
+  //           seats: seats,
+  //           description: description,
+  //         },
+  //         primaryImage: primaryImage,
+  //         additionalImages: additionalImages,
+  //       },
+  //     });
+
+  //     console.log("Vehicle Added:", data);
+  //     // Reset form or navigate away as needed
+  //     Swal.fire('Vehicle Added Successfully!', '', 'success');
+  //   } catch (error) {
+  //     console.error("Error Adding Vehicle:", error);
+  //     Swal.fire('Error Adding Vehicle!', '', 'error');
+  //   }
+  // };
   const handleAddVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     // Basic validation
     if (!selectedMake || !selectedModel || !selectedYear || price <= 0 || quantity <= 0) {
       alert('Please fill all required fields and ensure price and quantity are positive numbers.');
       return;
     }
-
+  
+    // Validate that a primary image is uploaded
+    if (!primaryImage) {
+      alert('Please upload a primary image.');
+      return;
+    }
+  
+    // Show loader (UI feedback)
+    Swal.fire({
+      title: 'Adding Vehicle...',
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    
+  
     try {
-      console.log(selectedMake);
       const { data } = await addRentableVehicle({
         variables: {
           input: {
@@ -113,16 +166,40 @@ const AddRentableVehicles: React.FC = () => {
           additionalImages: additionalImages,
         },
       });
-
+  
       console.log("Vehicle Added:", data);
-      // Reset form or navigate away as needed
+  
+      // Hide loader and show success message
       Swal.fire('Vehicle Added Successfully!', '', 'success');
+  
+      // Reset form fields after successful submission
+      resetForm();
     } catch (error) {
       console.error("Error Adding Vehicle:", error);
+  
+      // Show error message
       Swal.fire('Error Adding Vehicle!', '', 'error');
     }
   };
-
+  
+  // Function to reset form after successful submission
+  const resetForm = () => {
+    setSelectedMake('');
+    setSelectedModel('');
+    setSelectedYear('');
+    setPrice(0);
+    setQuantity(0);
+    // setAvailability(true);
+    setSelectedTransmission('');
+    setSelectedFuelType('');
+    setSeats(1);
+    setDescription('');
+    setPrimaryImage(null);
+    setAdditionalImages([]);
+    setPrimaryImagePreview('');
+    setAdditionalImagePreviews([]);
+  };
+  
 
 
   const handleAddImageField = () => {
@@ -289,7 +366,7 @@ const AddRentableVehicles: React.FC = () => {
         </div>
 
         {/* Primary Image Picker */}
-        <label>Primary Image:</label>
+        <label>Primary Image* : </label>
 
 
       <label className={styles.custum_file_upload} >

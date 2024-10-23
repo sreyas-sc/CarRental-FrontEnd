@@ -9,6 +9,8 @@ import { GiGearStickPattern } from "react-icons/gi";
 import { MdAirlineSeatReclineExtra } from 'react-icons/md';
 import { GET_RENTABLE_VEHICLES, DELETE_RENTABLE_VEHICLE, UPDATE_RENTABLE_VEHICLE } from '@/graphql/mutations';
 
+
+
 interface Vehicle {
   id: string;
   make: string;
@@ -154,6 +156,8 @@ const AdminViewCars: React.FC = () => {
         },
       });
 
+
+
       const updateResponse = response.data?.updateRentableVehicle;
 
       if (updateResponse) {
@@ -183,6 +187,7 @@ const AdminViewCars: React.FC = () => {
   const filteredVehicles = vehicles.filter(vehicle =>
     vehicle.model.toLowerCase().includes(filter.toLowerCase())
   );
+
 
   return (
     <div className={styles.cardContainer}>
@@ -271,7 +276,7 @@ const AdminViewCars: React.FC = () => {
                 </h2>
                 <p><strong>Price:</strong> {vehicle.price}</p>
                 <p><strong>Quantity:</strong> {vehicle.quantity}</p>
-                <p><strong>Available:</strong> {vehicle.availability ? 'Yes' : 'No'}</p>
+                {/* <p><strong>Available:</strong> {vehicle.availability ? 'Yes' : 'No'}</p> */}
                 <div className={styles.specs}>
                   <p><GiGearStickPattern /> {vehicle.transmission}</p>
                   <p><BsFillFuelPumpFill /> {vehicle.fuel_type}</p>

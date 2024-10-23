@@ -1,108 +1,181 @@
 .login {
-    position: relative; /* Necessary to position the ::before pseudo-element */
-    width: 100%;
-    height: 100vh; /* Full viewport height */
-    background-color: #051C34; /* Fallback background color */
-    background-image: url('/banners/backgroundbmw2.png'); /* Path to your background image */
-    background-size: contain; /* Control image size */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* No repeat */
-    display: flex; /* For inner content alignment */
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-    z-index: 1; /* Ensure the element is below the mask */
-  }
-  
-  .login::before {
-    content: ''; /* Required to create the pseudo-element */
-    position: absolute; /* Absolute position to cover the entire container */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1; /* Place the mask below the content but above the background */
-    pointer-events: none; /* Ensure the mask doesn't interfere with clicking */
-  }
-  
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  overflow: hidden;
+}
 
-  .loginform{
-    width: 500px;
-    height: 70%;
-    background-color: rgba(30, 29, 29, 0.836);
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.login::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+}
 
-  .cardcarimagecontainer{
-    width: 50px;
-    height: 50px;
-    display: flex;
-    padding-top: 20px;
-    align-items: center;
-    justify-content: center;
-  }
-  .logintext{
-    margin-top: 10px;
-    font-size: 25px;
-    font-weight: 800;
-    color: #b2b2b393;
-  }
-.inputfields{
-  margin-top: 20px;
+.loginform {
+  width: 400px;
+  min-height: 400px;
+  height: 70%;
+  background-color: rgb(108, 108, 108);
+  /* background-color: rgba(30, 29, 29, 0.836); */
+  background-color: white;
+  border-radius: 10px;
+  padding: 40px 30px 30px 30px;
+  position: relative;
+  box-shadow: 5px 10px 10px rgba(46, 139, 87, 0.2);
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  width: 80%;
+  align-items: center;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Wave animations */
+.loginform::before,
+.loginform::after {
+  content: '';
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  border-top-left-radius: 40%;
+  border-top-right-radius: 45%;
+  border-bottom-left-radius: 35%;
+  border-bottom-right-radius: 40%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.loginform::before {
+  left: -25%;
+  bottom: 0;
+  top: 30%;
+  background-color: rgba(134, 139, 235, 0.15); /* Reduced opacity for dark theme */
+  animation: wawes 4s infinite linear;
+  transform-origin: 50% 48%;
+}
+
+.loginform::after {
+  right: -25%;
+  bottom: 0;
+  top: 30%;
+  background-color: rgba(134, 139, 235, 0.2); /* Changed to match your button color */
+  animation: wawes 5s infinite;
+  transform-origin: 50% 52%;
+}
+
+@keyframes wawes {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.cardcarimagecontainer {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  padding-top: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.logintext {
+  margin-top: 10px;
+  font-size: 25px;
+  font-weight: 800;
+  color: #282e8593;
+}
+
+.inputfields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   align-items: center;
 }
 
-.emailinput{
-  width: 70%;
-  height: 40px;
-  color: black;
-  background-color: rgba(240, 248, 255, 0.966);
-  border-radius: 10px;
-  padding: 10px;
-}
-
-
-.passwordinput{
-  width: 70%;
-  height: 40px;
-  background-color: rgba(240, 248, 255, 0.966);
-  color: black;
-  border-radius: 10px;
-  padding: 10px;
-}
-
-.loginbutton{
-  width: 40%;
-  padding: 10px 30px;
-  border-radius: 10px;
-  cursor: pointer;
-  background-color: rgb(29, 135, 234, 0.8);
+.emailinput,
+.passwordinput {
+  font-family: inherit;
+  display: block;
+  border-radius: 5px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.53);
+  width: 100%;
   border: none;
+  /* border: 1px solid #ddd; */
+  padding: 10px;
+  margin: 15px 0;
+  color: rgb(134, 139, 235);
 }
-.loginbutton:hover{
+
+.passwordinputcontainer {
+  position: relative;
+  width: 100%;
+}
+
+.passwordinput {
+  width: 100%;
+  padding-right: 40px; /* Add space for the eye icon */
+}
+
+.togglePassword {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px; /* Adjust the size of the eye icon */
+}
+
+
+.loginbutton {
+  font-family: inherit;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  text-transform: uppercase;
+  width: 120px;
+  border: 0;
+  padding: 10px 0;
+  margin-top: 10px;
+  border-radius: 5px;
   background-color: rgb(29, 135, 234);
+  transition: background-color 300ms;
 }
 
-.registertext{
+.loginbutton:hover {
+  background-color: rgb(25, 118, 204);
+}
+.registertext {
   font-size: 12px;
+  color: #b2b2b393;
 }
 
-.registerlink{
+.registerlink {
   margin-top: -20px;
-  color: blue;
+  color: rgb(29, 135, 234);
   cursor: pointer;
 }
 
-.isadmin{
+.isadmin {
   font-size: 10px;
   margin-top: -10px;
   color: rgb(71, 71, 71);
   cursor: pointer;
 }
-  
+
+.registerlink:hover,
+.isadmin:hover {
+  text-decoration: underline;
+}

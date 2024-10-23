@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    border: 1px solid rgba(20, 114, 222, 0.429);
+    /* border: 1px solid rgba(20, 114, 222, 0.429); */
     border-radius: 30px;
     margin-left: 10px;
     margin-top: 10px;
@@ -30,6 +30,7 @@
     /* display: none; */
     width: 1px;
     border-color:transparent ;
+    background-color: transparent;
     /* box-shadow: none; */
     /* border: none; */
 
@@ -43,7 +44,7 @@
 .toggleButton {
     position: absolute;
     top: 0px;
-    right: -25px;
+    /* right: 25px; */
     background-color: #34373B;
     color: white;
     border: none;

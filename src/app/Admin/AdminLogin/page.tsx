@@ -22,6 +22,8 @@ const LoginAdmin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginAdmin, { loading, error }] = useMutation(LOGIN_ADMIN);
+  const [showPassword, setShowPassword] = useState(false); // Added state for toggling password visibility
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +62,7 @@ const LoginAdmin = () => {
             alt="Welcome Car"
           />
         </div>
-        <span className={styles.logintext}>Administrator Login</span>
+        <span className={styles.logintext}>Admin Login</span>
         <form className={styles.inputfields} onSubmit={handleLogin}>
           <input
             type="email"
@@ -70,14 +72,22 @@ const LoginAdmin = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <input
-            type="password"
-            className={styles.passwordinput}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className={styles.passwordinputcontainer}> {/* Container for password field and icon */}
+            <input
+              type={showPassword ? 'text' : 'password'}
+              className={styles.passwordinput}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <span 
+              className={styles.togglePassword} 
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? '🔓' : '🔒'} {/* Toggle eye icon */}
+            </span>
+          </div>
           <button className={styles.loginbutton} type="submit" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
