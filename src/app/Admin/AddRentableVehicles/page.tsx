@@ -67,6 +67,17 @@ const AddRentableVehicles: React.FC = () => {
 
   const handleAdditionalImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
+
+    if(additionalImages.length + files.length > 3)
+    {
+      Swal.fire({
+        title: 'Maximum 3 images are allowed',
+        icon: 'error',
+        allowOutsideClick: true,
+      });
+      return;
+    }
+
     setAdditionalImages((prevImages) => [...prevImages, ...files]);
     
     files.forEach((file) => {
@@ -344,10 +355,6 @@ const AddRentableVehicles: React.FC = () => {
             <img src={primaryImagePreview} alt="Primary" />
           </div>
         )}
-
-        {/* <div className={styles.imagePicker}>
-          <input type="file" accept="image/*" onChange={handlePrimaryImageChange} />
-        </div> */}
 
         {/* Multiple Images Input */}
         <div className={styles.imagePicker}>

@@ -177,7 +177,6 @@ const AddVehicle = () => {
       <form className={styles.form} onSubmit={handleAddVehicle}>
         {/* Form Fields */}
         <div>
-          
           <input
             type="text"
             name="vehicleName"

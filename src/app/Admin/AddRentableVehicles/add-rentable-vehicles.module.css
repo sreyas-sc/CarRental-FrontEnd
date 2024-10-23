@@ -1,7 +1,6 @@
 .container{
     display: flex;
     flex-direction: column;
-    /* border: 1px solid rgba(20, 114, 222, 0.429); */
     border-radius: 30px;
     min-width: 90%;
     align-items: center;
@@ -99,13 +98,12 @@
 }
 
 .inputfields:focus {
-    outline: none; /* Remove default outline */
-    /* border: 2px solid #007BFF;  */
+    outline: none;
 }
 
 .inputfields::placeholder {
     color: #ffffff;
-    opacity: 0.3; /* Make sure the placeholder color is not faded (optional) */
+    opacity: 0.3; 
   }
 
 .description{
@@ -118,18 +116,16 @@
     border: 1px solid rgba(0, 0, 0, 0.5); 
     padding: 10px; 
     min-height: 100px;
-    /* max-width: 300px; */
     max-height: 150px;
 }
 
 .description:focus {
-    outline: none; /* Remove default outline */
-    /* border: 2px solid #007BFF;  */
+    outline: none; 
 }
 
 .description::placeholder {
-    color: #aaa; /* Light gray color for the placeholder */
-    opacity: 1;  /* Full opacity */
+    color: #aaa; 
+    opacity: 1; 
 }
 
 .priceContainer {
@@ -213,7 +209,6 @@
   }
   
   .addImageButton {
-    /* width: 20%; */
     text-wrap: nowrap;
     padding: 10px;
     margin: 10px;
@@ -271,7 +266,6 @@
   }
   
   .quantityButton:hover {
-    /* background-color: #45a049; */
     border: 1px solid white;
   }
   .quantityButton:active {
@@ -316,12 +310,10 @@
 
   .quantityDisplay{
     outline: none; 
-    /* border: 2px solid #007BFF;  */
   }
 
 
   /* Custom image file upload */
-  /* From Uiverse.io by Yaya12085 */ 
 .custum_file_upload {
   height: 100px;
   width: 200px;
@@ -375,14 +367,12 @@
   font-size: 20px;
 }
 .form{
-  /* background-color: #5c5c5c; */
   display: flex;
   max-width: 100%;
   flex-direction: column;
 }
 .sectionContainer{
   max-width: 100%;
-  /* background-color: #5c5c5c; */
   display: flex;
   flex-direction: column;
 }
@@ -392,14 +382,11 @@
   align-items: center;
 }
 .quantityContainer{
-  /* background-color: #5c5c5c; */
   max-width: 100%;
   display: flex;
   flex-direction: column;
 }
 .quantityDisplay{
-  /* max-width: 90px; */
-  /* background-color: #007BFF; */
   border: none;
   width: 10px;
 }
@@ -420,14 +407,12 @@
     font-size: 20px;
   }
   .form{
-    /* background-color: #5c5c5c; */
     display: flex;
     max-width: 100%;
     flex-direction: column;
   }
   .sectionContainer{
     max-width: 100%;
-    /* background-color: #5c5c5c; */
     display: flex;
     flex-direction: column;
   }
@@ -437,14 +422,11 @@
     align-items: center;
   }
   .quantityContainer{
-    /* background-color: #5c5c5c; */
     max-width: 100%;
     display: flex;
     flex-direction: column;
   }
   .quantityDisplay{
-    /* max-width: 90px; */
-    /* background-color: #007BFF; */
     border: none;
     width: 10px;
   }
