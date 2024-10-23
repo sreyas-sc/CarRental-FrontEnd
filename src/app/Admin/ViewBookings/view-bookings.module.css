@@ -67,6 +67,163 @@
   transition: all 0.2s ease-in-out;
 }
 
+/* Metric container */
+/* Metrics Container */
+.metrics_container {
+  width: 100%;
+  padding: 1.5rem;
+}
+
+.metrics_grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .metrics_grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .metrics_grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Metric Cards */
+.metric_card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+}
+
+.metric_content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Metric Text Styles */
+.metric_label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4B5563;
+}
+
+.metric_value {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 0.5rem;
+}
+
+/* Icon Containers */
+.metric_icon_container {
+  padding: 0.75rem;
+  border-radius: 9999px;
+}
+
+.metric_icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.metric_icon_blue {
+  background-color: #DBEAFE;
+}
+
+.metric_icon_blue .metric_icon {
+  color: #2563EB;
+}
+
+.metric_icon_green {
+  background-color: #D1FAE5;
+}
+
+.metric_icon_green .metric_icon {
+  color: #059669;
+}
+
+.metric_icon_red {
+  background-color: #FEE2E2;
+}
+
+.metric_icon_red .metric_icon {
+  color: #DC2626;
+}
+
+/* Monthly Overview Bars */
+.metric_bars {
+  margin-top: 1rem;
+  space-y: 0.75rem;
+}
+
+.metric_bar_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.metric_bar_label {
+  font-size: 0.875rem;
+  color: #4B5563;
+}
+
+.metric_bar_container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  margin-left: 0.5rem;
+}
+
+.metric_bar_track {
+  flex: 1;
+  height: 0.5rem;
+  background-color: #E5E7EB;
+  border-radius: 9999px;
+  margin-right: 0.5rem;
+  overflow: hidden;
+}
+
+.metric_bar_progress {
+  height: 100%;
+  background-color: #059669;
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+.metric_bar_value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  min-width: 2rem;
+  text-align: right;
+}
+
+/* Growth Metrics */
+.metric_growth {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.metric_trend_icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+}
+
+.trend_positive {
+  color: #059669;
+}
+
+.trend_negative {
+  color: #DC2626;
+}
+/* Metric container */
 .chartControls :global(.chart-button:hover) {
   background-color: #e5e7eb;
   transform: translateY(-1px);

@@ -9,6 +9,7 @@ import styles from './view-bookings.module.css';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_BOOKINGS } from '@/graphql/mutations';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+import { CalendarDays, Users, TrendingUp } from 'lucide-react';
 
 
 interface Booking {
@@ -140,14 +141,40 @@ const ViewBookings: React.FC = () => {
 
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    // Uncomment the following line to save the file
-    // saveAs(blob, 'bookings_report.xlsx');
   };
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
+
+
+   // Add new functions for metrics calculations
+   const calculateMonthlyBookings = () => {
+    const monthlyData = filteredBookings.reduce((acc, booking) => {
+      const month = new Date(booking.startDate).toLocaleString('default', { month: 'short' });
+      acc[month] = (acc[month] || 0) + 1;
+      return acc;
+    }, {} as { [key: string]: number });
+    
+    return Object.entries(monthlyData)
+      .map(([month, count]) => ({ month, count }))
+      .sort((a, b) => {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return months.indexOf(a.month) - months.indexOf(b.month);
+      });
+  };
+
+  const calculateGrowth = () => {
+    const monthlyBookings = calculateMonthlyBookings();
+    if (monthlyBookings.length < 2) return 0;
+    const currentMonth = monthlyBookings[monthlyBookings.length - 1].count;
+    const previousMonth = monthlyBookings[monthlyBookings.length - 2].count;
+    return previousMonth !== 0 
+      ? ((currentMonth - previousMonth) / previousMonth * 100).toFixed(1)
+      : 100;
+  };
+
 
   // Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -158,12 +185,71 @@ const ViewBookings: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>View Bookings</h1>
+      {/* <h1 className={styles.title}>View Bookings</h1> */}
 
 
        {/* Charts Section */}
-       
+       {/* Metrics Section */}
+       <div className={styles.metrics_container}>
+        <div className={styles.metrics_grid}>
+          {/* Total Bookings Widget */}
+          <div className={styles.metric_card}>
+            <div className={styles.metric_content}>
+              <div>
+                <p className={styles.metric_label}>Total Bookings</p>
+                <p className={styles.metric_value}>{filteredBookings.length}</p>
+              </div>
+              <div className={`${styles.metric_icon_container} ${styles.metric_icon_blue}`}>
+                <Users className={styles.metric_icon} />
+              </div>
+            </div>
+          </div>
 
+          {/* Monthly Overview Widget */}
+          <div className={styles.metric_card}>
+            <div className={styles.metric_content}>
+              <p className={styles.metric_label}>Monthly Overview</p>
+              <div className={`${styles.metric_icon_container} ${styles.metric_icon_green}`}>
+                <CalendarDays className={styles.metric_icon} />
+              </div>
+            </div>
+            <div className={styles.metric_bars}>
+              {calculateMonthlyBookings().slice(-3).map(({ month, count }) => (
+                <div key={month} className={styles.metric_bar_item}>
+                  <span className={styles.metric_bar_label}>{month}</span>
+                  <div className={styles.metric_bar_container}>
+                    <div className={styles.metric_bar_track}>
+                      <div 
+                        className={styles.metric_bar_progress}
+                        style={{ 
+                          width: `${(count / Math.max(...calculateMonthlyBookings().map(b => b.count))) * 100}%` 
+                        }}
+                      />
+                    </div>
+                    <span className={styles.metric_bar_value}>{count}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Growth Widget */}
+          <div className={styles.metric_card}>
+            <div className={styles.metric_content}>
+              <div>
+                <p className={styles.metric_label}>Month-over-Month Growth</p>
+                <div className={styles.metric_growth}>
+                  <p className={styles.metric_value}>{calculateGrowth()}%</p>
+                  <TrendingUp className={`${styles.metric_trend_icon} ${Number(calculateGrowth()) >= 0 ? styles.trend_positive : styles.trend_negative}`} />
+                </div>
+              </div>
+              <div className={`${styles.metric_icon_container} ${Number(calculateGrowth()) >= 0 ? styles.metric_icon_green : styles.metric_icon_red}`}>
+                <TrendingUp className={styles.metric_icon} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
       <div className={styles.buttonsContainer}>
