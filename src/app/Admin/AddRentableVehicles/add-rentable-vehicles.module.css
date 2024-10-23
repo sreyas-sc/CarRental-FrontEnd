@@ -9,13 +9,6 @@
     
 }
 
-
-/* 
-.container:hover{
-    border: 1px solid rgba(20, 114, 222, 0.644);
-    box-shadow: -11px 12px 15px 4px rgba(29, 37, 46, 0.482);
-} */
-
 .header{
     margin-top: 30px;
     color: #5c5c5c;
@@ -260,32 +253,52 @@
     gap: 10px;
   }
   
+
+  
   .quantityButton {
     text-wrap: nowrap;
     padding: 10px;
     margin: 10px;
-    background-color: #4c4c4ec1;
-    border-color: rgba(255, 255, 255, 0.158);
-    border-radius: 10px;
-    transition: background-color 0.3s ease-in-out;
+    color: #090909;
+    padding: 0.7em 1.7em;
+    font-size: 18px;
+    border-radius: 0.5em;
+    background: #e8e8e8;
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    transition: all 0.3s;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
   }
   
   .quantityButton:hover {
-    background-color: #45a049;
+    /* background-color: #45a049; */
+    border: 1px solid white;
+  }
+  .quantityButton:active {
+    box-shadow: 4px 4px 12px #c5c5c5, -4px -4px 12px #ffffff;
   }
 
   .quantityButtonMinus {
     text-wrap: nowrap;
     padding: 10px;
     margin: 10px;
-    background-color: #4c4c4ec1;
-    border-color: rgba(255, 255, 255, 0.158);;
-    border-radius: 10px;
-    transition: background-color 0.3s ease-in-out;
+    color: #090909;
+    padding: 0.7em 1.7em;
+    font-size: 18px;
+    border-radius: 0.5em;
+    background: #e8e8e8;
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    transition: all 0.3s;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
   }
   
   .quantityButtonMinus:hover {
-    background-color: #c0453e;
+    border: 1px solid white;
+  }
+
+  .quantityButtonMinus:active {
+    box-shadow: 4px 4px 12px #c5c5c5, -4px -4px 12px #ffffff;
   }
   
   .quantityDisplay {

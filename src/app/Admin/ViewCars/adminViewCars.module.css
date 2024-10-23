@@ -16,6 +16,32 @@
     
 }
 
+.additionalImagesContainer {
+  /* background-color: #323232; */
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap; /* Prevent wrapping to the next line */
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  margin-top: 10px; /* Space between primary image and additional images */
+}
+
+.additionalImage {
+  width: 100px; /* Set a fixed width for the images */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 5px; /* Space between images */
+  border-radius: 5px; /* Optional: rounded corners */
+  object-fit: cover; /* Optional: cover image to fill the box */
+}
+
+/* Optional: Hide scrollbar for a cleaner look */
+.additionalImagesContainer::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for WebKit browsers */
+}
+
+
 .card {
   border: 1px solid #ccc;
   border-radius: 8px;

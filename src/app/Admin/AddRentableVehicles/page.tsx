@@ -83,45 +83,6 @@ const AddRentableVehicles: React.FC = () => {
     setAdditionalImagePreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
   };
 
-
-  // const handleAddVehicle = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   // Basic validation
-  //   if (!selectedMake || !selectedModel || !selectedYear || price <= 0 || quantity <= 0) {
-  //     alert('Please fill all required fields and ensure price and quantity are positive numbers.');
-  //     return;
-  //   }
-
-  //   try {
-  //     console.log(selectedMake);
-  //     const { data } = await addRentableVehicle({
-  //       variables: {
-  //         input: {
-  //           make: selectedMake,
-  //           model: selectedModel,
-  //           year: selectedYear,
-  //           price: price,
-  //           quantity: quantity,
-  //           availability: availability,
-  //           transmission: selectedTransmission,
-  //           fuel_type: selectedFuelType,
-  //           seats: seats,
-  //           description: description,
-  //         },
-  //         primaryImage: primaryImage,
-  //         additionalImages: additionalImages,
-  //       },
-  //     });
-
-  //     console.log("Vehicle Added:", data);
-  //     // Reset form or navigate away as needed
-  //     Swal.fire('Vehicle Added Successfully!', '', 'success');
-  //   } catch (error) {
-  //     console.error("Error Adding Vehicle:", error);
-  //     Swal.fire('Error Adding Vehicle!', '', 'error');
-  //   }
-  // };
   const handleAddVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
   

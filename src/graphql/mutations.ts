@@ -231,6 +231,7 @@ export const GET_RENTABLE_VEHICLES = gql`
       fuel_type
       seats
       primaryImageUrl
+      additionalImageUrls
       description
     }
   }

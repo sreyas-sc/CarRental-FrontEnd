@@ -187,6 +187,7 @@ const AdminViewCars: React.FC = () => {
   const filteredVehicles = vehicles.filter(vehicle =>
     vehicle.model.toLowerCase().includes(filter.toLowerCase())
   );
+  
 
 
   return (
@@ -211,47 +212,7 @@ const AdminViewCars: React.FC = () => {
       </div>
 
       {/* Vehicle cards */}
-      {/* <div className={styles.vehicleCardContainer}>
-        {filteredVehicles.map((vehicle) => (
-          <div className={styles.card} key={vehicle.id}>
-            <img
-              className={styles.cardImage}
-              src={vehicle.primaryImageUrl || 'https://via.placeholder.com/150'}
-              alt={`${vehicle.make} ${vehicle.model} ${vehicle.year}`}
-            />
-            <div className={styles.cardBody}>
-              <h2 className={styles.cardTitle}>
-                {vehicle.make} {vehicle.model} {vehicle.year}
-              </h2>
-              <p><strong>Price:</strong> {vehicle.price}</p>
-              <p><strong>Quantity:</strong> {vehicle.quantity}</p>
-              <p><strong>Available:</strong> {vehicle.availability ? 'Yes' : 'No'}</p>
-              <div className={styles.specs}>
-                <p><GiGearStickPattern/> {vehicle.transmission}</p>
-                <p><BsFillFuelPumpFill/> {vehicle.fuel_type}</p>
-                <p><MdAirlineSeatReclineExtra/> {vehicle.seats}</p>
-              </div>
-              <div className={styles.descriptionContainer}>
-                <p>{vehicle.description}</p>
-              </div>
-              <div className={styles.deleteAndUpdateButtonContainer}>
-                <button
-                  className={styles.editButton}
-                  onClick={() => handleEdit(vehicle)}
-                >
-                  Edit
-                </button>
-                <button
-                  className={styles.deleteButton}
-                  onClick={() => handleDelete(vehicle.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div> */}
+      
       <div className={styles.vehicleCardContainer}>
         {filteredVehicles.length === 0 ? (
           <div className={styles.noCarsContainer}>
@@ -270,6 +231,26 @@ const AdminViewCars: React.FC = () => {
                 src={vehicle.primaryImageUrl || 'https://via.placeholder.com/150'}
                 alt={`${vehicle.make} ${vehicle.model} ${vehicle.year}`}
               />
+
+              {/*  */}
+              {vehicle.additionalImageUrls && vehicle.additionalImageUrls.length > 0 && (
+                  <>
+                    {console.log('Additional Images for', vehicle.model, vehicle.additionalImageUrls)}
+                    <div className={styles.additionalImagesContainer}>
+                      {vehicle.additionalImageUrls.map((imageUrl, index) => (
+                        <img
+                          key={index}
+                          className={styles.additionalImage}
+                          src={imageUrl}
+                          alt={`Additional ${index + 1} for ${vehicle.make} ${vehicle.model}`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+
+              {/*  */}
+
               <div className={styles.cardBody}>
                 <h2 className={styles.cardTitle}>
                   {vehicle.make} {vehicle.model} {vehicle.year}
