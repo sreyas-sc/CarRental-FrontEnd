@@ -35,10 +35,24 @@
     transform: scale(1.05); /* Slight zoom effect on hover */
 }
 
+.imagePreview{
+  display: flex;
+  flex-direction: column;
+}
+
+.previewimage{
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 10px;
+}
+
+
 .cardImage {
     width: 100%; /* Full width image */
     height: 200px; /* Fixed height */
-    object-fit: cover; /* Crop the image */
+    object-fit: cover;
+    
 }
 
 .cardBody {
@@ -68,6 +82,7 @@
 }
 
 .noCarsImage{
+  
   height: 400px;
   width: 400px;
 }
@@ -206,9 +221,11 @@
   .popupContent {
     align-items: center;
     justify-content: center;
-    background: rgba(119, 149, 225, 0.5); /* Translucent background */
+    border: 3px solid rgb(255, 255, 255);
+    /* background: rgba(119, 149, 225, 0.5);  */
+    background: rgba(57, 57, 59, 0.5); 
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 25px;
     width: 500px; /* Adjust width as needed */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px); /* Apply background blur */

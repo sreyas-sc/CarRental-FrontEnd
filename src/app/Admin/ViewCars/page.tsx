@@ -313,7 +313,7 @@ const AdminViewCars: React.FC = () => {
             {/* <h2>Edit Vehicle</h2> */}
             <form onSubmit={handleUpdate} className={styles.form}>
               <div className={styles.imagePreview} onClick={() => fileInputRef.current?.click()}>
-                <img 
+                <img className={styles.previewimage}
                   src={newPrimaryImage ? URL.createObjectURL(newPrimaryImage) : (selectedVehicle.primaryImageUrl || 'https://via.placeholder.com/150')} 
                   alt="Primary vehicle image preview" 
                   style={{ maxWidth: '200px', maxHeight: '200px', cursor: 'pointer' }}
@@ -325,7 +325,7 @@ const AdminViewCars: React.FC = () => {
                   onChange={handlePrimaryImageChange}
                   accept="image/*"
                 />
-                <p>Click to update primary image</p>
+                <p>Click to update image</p>
               </div>
               
               <table className={styles.table}>
