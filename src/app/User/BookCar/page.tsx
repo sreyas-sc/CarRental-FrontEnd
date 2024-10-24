@@ -162,7 +162,7 @@ const Booking: React.FC = () => {
                   // router.push('/User/UserProfile');
                   window.location.href = '/User/UserProfile';
                 }, 3000); // Delay navigation for a few seconds after the alert
-              }, 3000); // Adjust this delay for how long you want the confetti to show (in milliseconds)
+              }, 3000); //delay for how long you want the confetti to show (in milliseconds)
             }
             
           } catch (error) {

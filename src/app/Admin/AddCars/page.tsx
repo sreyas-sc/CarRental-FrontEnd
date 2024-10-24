@@ -78,6 +78,44 @@ const AddVehicle = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
 
+  // const handleAddVehicle = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   try {
+  //     await addVehicle({
+  //       variables: { make, model, year },
+  //       update: (cache, { data: { addVehicle } }) => {
+  //         const cachedData = cache.readQuery<VehiclesData>({ query: GET_ALL_VEHICLES_MUTATION });
+  //         if (cachedData) {
+  //           const { getAllCars } = cachedData;
+  //           cache.writeQuery({
+  //             query: GET_ALL_VEHICLES_MUTATION,
+  //             data: { getAllCars: [...getAllCars, addVehicle] },
+  //           });
+  //         }
+  //       },
+  //     });
+
+  //     Swal.fire({
+  //       icon: 'success',
+  //       title: 'Success',
+  //       text: 'Vehicle added successfully!',
+  //       confirmButtonText: 'OK'
+  //     });
+
+  //     setMake('');
+  //     setModel('');
+  //     setYear('');
+  //     refetch();
+  //   } catch (err) {
+  //     console.error(err);
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Error',
+  //       text: 'Failed to add vehicle',
+  //       confirmButtonText: 'Try Again'
+  //     });
+  //   }
+  // };
   const handleAddVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -107,13 +145,46 @@ const AddVehicle = () => {
       setYear('');
       refetch();
     } catch (err) {
+      const error = err as any;
       console.error(err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to add vehicle',
-        confirmButtonText: 'Try Again'
-      });
+      
+      // Check if it's a validation error
+      if (error.graphQLErrors?.[0]?.extensions?.code === 'BAD_USER_INPUT') {
+        const errors = error.graphQLErrors[0].extensions.errors;
+        let errorMessage = '';
+        
+        // Build error message from validation errors
+        errors.forEach((error: { field: string; message: string }) => {
+          if (error.field === 'general') {
+            errorMessage = error.message;
+          } else {
+            errorMessage += `${error.field}: ${error.message}\n`;
+          }
+        });
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Validation Error',
+          text: errorMessage,
+          confirmButtonText: 'OK'
+        });
+      } else if (error.graphQLErrors?.[0]?.message.includes('Duplicate Vehicle')) {
+        // Handle duplicate vehicle error
+        Swal.fire({
+          icon: 'warning',
+          title: 'Duplicate Vehicle',
+          text: error.graphQLErrors[0].message,
+          confirmButtonText: 'OK'
+        });
+      } else {
+        // Handle other errors
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to add vehicle. Please try again.',
+          confirmButtonText: 'Try Again'
+        });
+      }
     }
   };
 

@@ -52,7 +52,7 @@ const PopularDeals: React.FC = () => {
             <h2 className={styles.cardcarname}>{vehicle.make} {vehicle.model}</h2>
             <p className={styles.cardcaryear}>{vehicle.year}</p>
             <p className={styles.cardcarprice}>₹ {vehicle.price}</p>
-            <button className={styles.cardbutton}>Rent Now</button>
+            {/* <button className={styles.cardbutton}>Rent Now</button> */}
           </div>
         ))}
       </div>
