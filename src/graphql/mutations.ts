@@ -157,6 +157,9 @@ export const UPDATE_RENTABLE_VEHICLE = gql`
       $year: String
       $price: Float
       $quantity: Int
+      $transmission: String
+      $fuel_type: String
+      $seats: Int
       $description: String
       $primaryImage: Upload
       $additionalImages: [Upload]
@@ -168,6 +171,9 @@ export const UPDATE_RENTABLE_VEHICLE = gql`
       year: $year,
       price: $price,
       quantity: $quantity,
+      transmission: $transmission,
+      fuel_type: $fuel_type,
+      seats: $seats,
       description: $description,
       primaryImage: $primaryImage,
       additionalImages: $additionalImages
@@ -181,6 +187,9 @@ export const UPDATE_RENTABLE_VEHICLE = gql`
         price
         quantity
         description
+        transmission
+        fuel_type
+        seats
         primaryImageUrl
         additionalImageUrls
       }

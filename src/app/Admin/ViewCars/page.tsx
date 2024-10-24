@@ -311,10 +311,6 @@ const AdminViewCars: React.FC = () => {
                 <p>Click to update image</p>
               </div>
 
-              {/* Additional Image view */}
-
-              {/* Additional image view */}
-              
               <table className={styles.table}>
                 <tbody>
                   <tr>
@@ -367,6 +363,56 @@ const AdminViewCars: React.FC = () => {
                       required 
                     /></td>
                   </tr>
+
+                  {/* Dropdown for Transmission */}
+                  <tr>
+                    <td>Transmission:</td>
+                    <td>
+                      <select
+                        className={styles.popupinput}
+                        value={selectedVehicle.transmission} 
+                        onChange={(e) => setSelectedVehicle({ ...selectedVehicle, transmission: e.target.value })}
+                        required
+                      >
+                        <option value="">Select transmission</option>
+                        <option value="Manual">Manual</option>
+                        <option value="Automatic">Automatic</option>
+                        <option value="Semi-automatic">Semi-automatic</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                  {/* Dropdown for Fuel Type */}
+                  <tr>
+                    <td>Fuel Type:</td>
+                    <td>
+                      <select
+                        className={styles.popupinput}
+                        value={selectedVehicle.fuel_type} 
+                        onChange={(e) => setSelectedVehicle({ ...selectedVehicle, fuel_type: e.target.value })}
+                        required
+                      >
+                        <option value="">Select fuel type</option>
+                        <option value="Petrol">Petrol</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Electric">Electric</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Seats:</td>
+                    <td>
+                      <input
+                        className={styles.popupinput}
+                        type="number"
+                        value={selectedVehicle.seats} 
+                        onChange={(e) => setSelectedVehicle({ ...selectedVehicle, seats: Number(e.target.value) })}
+                        required
+                      />
+                    </td>
+                  </tr>
+
                   <tr>
                     <td>Description:</td>
                     <td><textarea 
@@ -378,11 +424,12 @@ const AdminViewCars: React.FC = () => {
                   </tr>
                 </tbody>
               </table>
-              
+
               <div className={styles.popupformcontrols}>
                 <button type="submit" className={styles.updateButton}>Update Vehicle</button>
               </div>
             </form>
+
           </div>
         </div>
       )}

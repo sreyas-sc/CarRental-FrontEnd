@@ -289,6 +289,41 @@
     .popupinput{
         background-color: transparent;
     }
+    .popupinput {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: transparent;  /* Transparent background */
+      color: #ffffff;  /* Text color */
+      appearance: none;  /* Removes default arrow for custom styles */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      position: relative;
+      cursor: pointer;
+    }
+
+.popupinput:focus {
+  outline: none;  /* Removes the default blue outline on focus */
+  border-color: #666;  /* Optional: change border color on focus */
+}
+
+.popupinput option {
+  background-color: rgba(255, 255, 255, 0.7); /* Transparent menu with some opacity */
+  color: #333;  /* Text color */
+}
+
+/* Optional: Add a custom dropdown arrow */
+.popupinput::after {
+  content: '▼';  /* Custom arrow */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
     .popuptextarea{
         max-width: 240PX;
         max-height: 250px;
