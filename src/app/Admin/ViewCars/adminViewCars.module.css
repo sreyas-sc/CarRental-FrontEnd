@@ -17,7 +17,6 @@
 }
 
 .additionalImagesContainer {
-  /* background-color: #323232; */
   width: 100%;
   padding: 10px;
   display: flex;
@@ -136,8 +135,6 @@
 .editButton, .deleteButton {
     margin-top: 10px; 
     padding: 10px 15px; 
-    /* border: none;  */
-    border-radius: 5px; 
     cursor: pointer; 
     border-radius: 20px;
 }
@@ -248,7 +245,6 @@
     align-items: center;
     justify-content: center;
     border: 3px solid rgb(255, 255, 255);
-    /* background: rgba(119, 149, 225, 0.5);  */
     background: rgba(57, 57, 59, 0.5); 
     padding: 20px;
     border-radius: 25px;
@@ -269,6 +265,7 @@
     align-items: center;
     justify-content: center;
     padding: 30px;
+    max-width: 100%;
   }
 
   .popupformcontrols{
@@ -293,11 +290,12 @@
         background-color: transparent;
     }
     .popuptextarea{
-        max-width: 100%;
+        max-width: 240PX;
         max-height: 250px;
         min-width: 235px;
         min-height: 78px;
         background-color: transparent;
+        overflow-y: hidden;
 
     }
   
@@ -361,9 +359,7 @@
     margin-right: 10px;
   }
   .vehicleCardContainer{
-    /* max-width: 100%; */
     max-width: 92%;
-    /* margin: 0; */
   }
   .cardImage, .popup{
     max-width: 100%;

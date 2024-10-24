@@ -184,9 +184,11 @@ const AdminViewCars: React.FC = () => {
     }
   };
 
-  const filteredVehicles = vehicles.filter(vehicle =>
-    vehicle.model.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredVehicles = vehicles.filter(vehicle => {
+    const searchTerm = filter.toLowerCase();
+    const fullName = `${vehicle.make} ${vehicle.model}`.toLowerCase();
+    return fullName.includes(searchTerm);
+  });
   
 
 
@@ -308,6 +310,10 @@ const AdminViewCars: React.FC = () => {
                 />
                 <p>Click to update image</p>
               </div>
+
+              {/* Additional Image view */}
+
+              {/* Additional image view */}
               
               <table className={styles.table}>
                 <tbody>

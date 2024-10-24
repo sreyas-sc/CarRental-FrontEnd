@@ -9,7 +9,7 @@ import styles from './view-bookings.module.css';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_BOOKINGS } from '@/graphql/mutations';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
-import { CalendarDays, Users, TrendingUp } from 'lucide-react';
+import { CalendarDays, Users, TrendingUp, TrendingDown } from 'lucide-react';
 
 
 interface Booking {
@@ -186,8 +186,6 @@ const ViewBookings: React.FC = () => {
   return (
     <div className={styles.container}>
       {/* <h1 className={styles.title}>View Bookings</h1> */}
-
-
        {/* Charts Section */}
        {/* Metrics Section */}
        <div className={styles.metrics_container}>
