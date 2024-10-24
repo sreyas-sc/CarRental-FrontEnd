@@ -160,6 +160,52 @@ const UserProfile: React.FC = () => {
     XLSX.writeFile(workbook, 'user-bookings.xlsx');
   };
 
+  // const columns = [
+  //   {
+  //     title: <Checkbox onChange={e => {
+  //       setSelectedRowKeys(e.target.checked ? bookings.map(booking => booking.id) : []);
+  //     }} />,
+  //     dataIndex: 'checkbox',
+  //     render: (_: any, record: Booking) => (
+  //       <Checkbox
+  //         checked={selectedRowKeys.includes(record.id)}
+  //         onChange={() => handleRowSelectionChange(
+  //           selectedRowKeys.includes(record.id)
+  //             ? selectedRowKeys.filter(key => key !== record.id)
+  //             : [...selectedRowKeys, record.id]
+  //         )}
+  //       />
+  //     ),
+  //   },
+  //   {
+  //     title: 'Start Date',
+  //     dataIndex: 'startDate',
+  //   },
+  //   {
+  //     title: 'End Date',
+  //     dataIndex: 'endDate',
+  //   },
+  //   {
+  //     title: 'Car Model',
+  //     render: (text: any, record: Booking) => {
+  //       // Check if the vehicle is available
+  //       if (record.vehicle) {
+  //         return `${record.vehicle.make} ${record.vehicle.model}`;
+  //       } else {
+  //         return 'Vehicle Deleted'; // Return a placeholder if the vehicle is not available
+  //       }
+  //     },
+  //   },
+  //   {
+  //     title: 'Status',
+  //     dataIndex: 'status',
+  //   },
+  //   {
+  //     title: 'Total Price',
+  //     dataIndex: 'totalPrice',
+  //     render: (text: string) => `₹${text}`,
+  //   },
+  // ];
   const columns = [
     {
       title: <Checkbox onChange={e => {
@@ -199,6 +245,19 @@ const UserProfile: React.FC = () => {
     {
       title: 'Status',
       dataIndex: 'status',
+      render: (text: string, record: Booking) => {
+        const today = new Date();
+        const startDate = new Date(record.startDate);
+        const endDate = new Date(record.endDate);
+  
+        if (today > endDate) {
+          return 'Used';  // Booking is completed in the past
+        } else if (today >= startDate && today <= endDate) {
+          return 'In Use';  // Currently in use
+        } else {
+          return 'Booked';  // Future booking
+        }
+      },
     },
     {
       title: 'Total Price',
@@ -379,13 +438,39 @@ const UserProfile: React.FC = () => {
         <Form.Item name="phone" label="Phone" rules={[{ required: true }]}>
           <Input readOnly />
         </Form.Item>
-        <Form.Item name="city" label="City">
+        <Form.Item name="city" label="City" rules={[
+            { required: true, message: 'City is required' },
+            { 
+              pattern: /^[A-Za-z\s]+$/, 
+              message: 'State must contain only letters' 
+            },
+          ]}
+        >
           <Input />
         </Form.Item>
-        <Form.Item name="state" label="State">
+        <Form.Item name="state" label="State" 
+          rules={[
+            { required: true, message: 'State is required' },
+            { 
+              pattern: /^[A-Za-z\s]+$/, 
+              message: 'State must contain only letters' 
+            },
+          ]}
+        >
+
           <Input />
         </Form.Item>
-        <Form.Item name="country" label="Country">
+        <Form.Item 
+          name="country" 
+          label="Country" 
+          rules={[
+              { required: true, message: 'Country is required' },
+              { 
+                pattern: /^[A-Za-z\s]+$/, 
+                message: 'Country must contain only letters' 
+              },
+          ]}
+        >
           <Input />
         </Form.Item>
         {editError && <div style={{ color: 'red', marginBottom: 16 }}>{editError}</div>} {/* Display error here */}
