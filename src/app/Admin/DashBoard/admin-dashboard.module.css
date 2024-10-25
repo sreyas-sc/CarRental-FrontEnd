@@ -26,28 +26,30 @@
 }
 
 .left.closed {
-    /* display: none; */
-    width: 1px;
+    /* width: 1px; */
     border-color:transparent ;
+    background-color: white;
+    border: none;
+    width: 0px;
+}
+.left.closed:hover{
+    box-shadow: none;
+    border: none;
     background-color: transparent;
-    /* box-shadow: none; */
-    /* border: none; */
-
 }
 
 .left:hover {
-    border: 1px solid rgba(20, 114, 222, 0.644);
-    box-shadow: 11px 12px 15px 4px rgba(29, 37, 46, 0.482);
+    /* border: 1px solid rgba(20, 114, 222, 0.644); */
+    /* box-shadow: 11px 12px 15px 4px rgba(29, 37, 46, 0.482); */
 }
 
 .toggleButton {
     position: absolute;
     top: 0px;
-    /* right: 25px; */
     background-color: #34373B;
     color: white;
     border: none;
-    border-radius: 0px 30px 30px 0px;
+    border-radius: 30px 30px 30px 30px;
     width: 50px;
     height: 50px;
     cursor: pointer;
@@ -120,6 +122,14 @@
     }
     .toggleButton{
         display: none;
+    }
+
+    .left.closed {
+        width: 100%;
+        /* border-color:transparent; */
+        /* background-color: white; */
+        border: none;
+        /* width: 0px; */
     }
     
     .left {
