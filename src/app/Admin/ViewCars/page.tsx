@@ -27,6 +27,10 @@ interface Vehicle {
   description: string;
 }
 
+interface FormErrors {
+  [key: string]: string;
+}
+
 interface GetRentableVehiclesResponse {
   getRentableVehicles: Vehicle[];
 }
@@ -45,6 +49,8 @@ interface UpdateRentableVehicleResponse {
     vehicle: Vehicle;
   };
 }
+
+// Validation schema
 
 const AdminViewCars: React.FC = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -316,7 +322,9 @@ const AdminViewCars: React.FC = () => {
                   <tr>
                     <td>Make:</td>
                     <td><input
-                      className={styles.popupinput}
+                      readOnly
+                      disabled
+                      className={styles.popupinputdisabled}
                       type="text" 
                       value={selectedVehicle.make} 
                       onChange={(e) => setSelectedVehicle({ ...selectedVehicle, make: e.target.value })} 
@@ -326,7 +334,9 @@ const AdminViewCars: React.FC = () => {
                   <tr>
                     <td>Model:</td>
                     <td><input
-                      className={styles.popupinput}
+                      readOnly
+                      disabled
+                      className={styles.popupinputdisabled}
                       type="text" 
                       value={selectedVehicle.model} 
                       onChange={(e) => setSelectedVehicle({ ...selectedVehicle, model: e.target.value })} 
@@ -336,8 +346,10 @@ const AdminViewCars: React.FC = () => {
                   <tr>
                     <td>Year:</td>
                     <td><input
-                      className={styles.popupinput}
+                      readOnly
+                      className={styles.popupinputdisabled}
                       type="text"
+                      disabled
                       value={selectedVehicle.year}
                       onChange={(e) => setSelectedVehicle({ ...selectedVehicle, year: e.target.value })} 
                       required 

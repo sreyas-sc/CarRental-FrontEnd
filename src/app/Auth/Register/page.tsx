@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { useMutation } from '@apollo/client';
 import { REGISTER_MUTATION, SEND_OTP_MUTATION, VERIFY_OTP_MUTATION } from '@/graphql/mutations';
 import Link from 'next/link';
+import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 // Validation schema
 const registerSchema = Joi.object({
@@ -81,6 +83,7 @@ const Register = () => {
   const [register, { loading: registerLoading }] = useMutation(REGISTER_MUTATION);
   const [sendOTP, { loading: otpLoading }] = useMutation(SEND_OTP_MUTATION);
   const [verifyOTP] = useMutation(VERIFY_OTP_MUTATION);
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -174,13 +177,30 @@ const Register = () => {
           const { data: registerData } = await register({
             variables: formData
           });
-          alert(`User ${registerData.register.name} registered successfully!`);
+           // Show success message with SweetAlert
+           await Swal.fire({
+            title: 'Registration Successful!',
+            text: 'You can now login with your credentials',
+            icon: 'success',
+            confirmButtonText: 'Proceed to Login',
+            confirmButtonColor: '#3085d6',
+            allowOutsideClick: false
+          });
+          
+          // Redirect to login page
+          router.push('/Auth/Login');
           setShowOtpPopup(false);
         } else {
           setError(verifyData.verifyOTP.message || 'Invalid OTP');
         }
       } catch (error) {
         setError(`Error: ${error}`);
+        Swal.fire({
+          title: 'Registration Failed',
+          text: error instanceof Error ? error.message : 'An unknown error occurred',
+          icon: 'error',
+          confirmButtonColor: '#d33',
+        });
       }
     }
   };

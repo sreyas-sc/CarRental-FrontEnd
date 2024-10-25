@@ -287,15 +287,12 @@
     }
 
     .popupinput{
-        background-color: transparent;
-    }
-    .popupinput {
+      background-color: transparent;
       width: 100%;
       padding: 10px;
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 4px;
-      background: transparent;  /* Transparent background */
       color: #ffffff;  /* Text color */
       appearance: none;  /* Removes default arrow for custom styles */
       -webkit-appearance: none;
@@ -304,9 +301,48 @@
       cursor: pointer;
     }
 
+
 .popupinput:focus {
   outline: none;  /* Removes the default blue outline on focus */
   border-color: #666;  /* Optional: change border color on focus */
+}
+
+.popupinputdisabled{
+  background-color:#9e9ea396;
+  cursor: not-allowed;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #ffffff; 
+  appearance: none;  /* Removes default arrow for custom styles */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+}
+
+.inputError {
+  border: 1px solid #ff4444 !important;
+  background-color: #fff8f8;
+}
+
+.errorMessage {
+  color: #ff4444;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.popupinput.inputError:focus {
+  border-color: #ff4444;
+  box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.2);
+}
+
+
+.popupinputdisabled:focus {
+outline: none;  /* Removes the default blue outline on focus */
+border-color: #666;  /* Optional: change border color on focus */
 }
 
 .popupinput option {
