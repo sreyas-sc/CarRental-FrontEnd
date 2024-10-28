@@ -1,0 +1,13 @@
+.maindiv{
+    display: flex;
+    flex-direction: row;
+    text-wrap: nowrap;
+    color: black;
+    gap: 5px;
+    cursor: default;
+}
+.minutes{
+    color: red;
+    font-weight: bolder;
+}
+

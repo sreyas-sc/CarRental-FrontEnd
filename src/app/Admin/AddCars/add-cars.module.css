@@ -64,6 +64,33 @@
 
 }
 
+
+/* pagination for the table */
+/* Pagination.css */
+/* Pagination.module.css */
+.pagination_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.pagination_button {
+  margin: 0 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  background-color: #e5e7eb; /* Light gray background */
+  color: #000; /* Default text color */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #3b82f6; /* Blue background for active */
+  color: #fff; /* White text color for active */
+}
+
+
+/* pagination for the table */
 .suggestions {
     position: absolute;
     color: black;

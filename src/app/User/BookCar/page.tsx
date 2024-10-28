@@ -7,6 +7,7 @@ import styles from './book-car.module.css';
 import Swal from 'sweetalert2';
 import dotenv from 'dotenv';
 import confetti from 'canvas-confetti';
+import PaymentTimer from './paymentTmer'
 
 dotenv.config();
 
@@ -39,6 +40,8 @@ declare global {
   }
 }
 
+
+
 const Booking: React.FC = () => {
   const router = useRouter();
   
@@ -67,6 +70,11 @@ const Booking: React.FC = () => {
     if (sessionUser) {
       setUser(sessionUser);
     }
+
+    // payment timer
+    
+    
+    // payment timer
 
     // Load Razorpay script
     const script = document.createElement('script');
@@ -196,6 +204,9 @@ const Booking: React.FC = () => {
     }
   };
 
+
+  
+
   // Function to calculate total number of days
   const calculateTotalDays = () => {
     return Math.ceil((new Date(toDate).getTime() - new Date(fromDate).getTime()) / (1000 * 3600 * 24));
@@ -207,6 +218,7 @@ const Booking: React.FC = () => {
   const totalDays = calculateTotalDays();
 
   return (
+    
     <div className={styles.bookingContainer}>
       <div className={styles.first}>
       {/* <h1 className={styles.title}>Booking Details</h1> */}
@@ -247,9 +259,15 @@ const Booking: React.FC = () => {
 
         </div>
       </div>
+      
         
         <div className={styles.second}>
+        <div className={styles.timerContainer}>
+          <PaymentTimer />
+        </div>
+
         <h2 className={styles.vehicleName}>{data?.getVehicleDetailsById?.make} {data?.getVehicleDetailsById?.model} ({data?.getVehicleDetailsById?.year})</h2>
+        
         <p className={styles.description}><strong>Price:</strong> ₹{data?.getVehicleDetailsById?.price}/day</p>
         <p className={styles.description}>{data?.getVehicleDetailsById?.description}</p>
       

@@ -62,7 +62,7 @@ const LoginAdmin = () => {
             alt="Welcome Car"
           />
         </div>
-        <span className={styles.logintext}>Admin Login</span>
+        <span className={styles.logintext}>Administrator Login</span>
         <form className={styles.inputfields} onSubmit={handleLogin}>
           <input
             type="email"

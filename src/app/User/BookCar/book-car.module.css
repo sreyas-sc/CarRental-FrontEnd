@@ -16,6 +16,11 @@
     width: 50%;
     /* background-color: #005bb5; */
 }
+
+.timerContainer {
+  margin: 20px 0;
+  text-align: center;
+}
 .second{
     width: 50%;
     align-items: center;

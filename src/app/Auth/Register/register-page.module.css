@@ -244,3 +244,50 @@
   cursor: pointer;
   font-weight: bold;
 }
+
+/* Assuming existing styles */
+.passwordinput {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  position: relative;
+}
+
+/* Toggle button styling */
+.toggleButton {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #007bff; /* Customize color as needed */
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Additional styling for toggle button on hover */
+.toggleButton:hover {
+  color: #0056b3; /* Darker shade on hover */
+}
+
+/* Style adjustment to position the input container correctly */
+.inputContainer {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* Error styling */
+.errorInput {
+  border-color: red;
+}
+
+.errorText {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}

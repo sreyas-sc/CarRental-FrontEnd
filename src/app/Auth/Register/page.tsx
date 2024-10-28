@@ -76,6 +76,14 @@ const registerSchema = Joi.object({
       'string.empty': 'Password is required',
       'string.min': 'Password must be at least 6 characters long',
       'string.pattern.base': 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+    }),
+
+    confirmPassword: Joi.any()
+    .valid(Joi.ref('password'))
+    .required()
+    .messages({
+      'any.only': 'Passwords do not match',
+      'string.empty': 'Please confirm your password'
     })
 });
 
@@ -104,6 +112,7 @@ const Register = () => {
   const [otp, setOtp] = useState('');
   const [showOtpPopup, setShowOtpPopup] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); //for password visibility(toggle)
 
   const validateField = (name: string, value: string): string | null => {
     const fieldSchema = Joi.object({ [name]: registerSchema.extract(name) });
@@ -205,6 +214,11 @@ const Register = () => {
     }
   };
 
+  // for password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOtp(e.target.value);
   };
@@ -303,7 +317,7 @@ const Register = () => {
               {validationErrors.country && <span className={styles.errorText}>{validationErrors.country}</span>}
             </div>
 
-            <div className={styles.inputContainer}>
+            {/* <div className={styles.inputContainer}>
               <input
                 type="password"
                 name="password"
@@ -314,6 +328,41 @@ const Register = () => {
                 required
               />
               {validationErrors.password && <span className={styles.errorText}>{validationErrors.password}</span>}
+            </div> */}
+            <div className={styles.inputContainer}>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                className={`${styles.passwordinput} ${validationErrors.password ? styles.errorInput : ''}`}
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className={styles.toggleButton}
+              >
+                {showPassword ? "🔒" : "🔓"}
+              </button>
+              {validationErrors.password && <span className={styles.errorText}>{validationErrors.password}</span>}
+            </div>
+
+            {/* Confirm Password Field */}
+            <div className={styles.inputContainer}>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="confirmPassword"
+                className={`${styles.passwordinput} ${validationErrors.confirmPassword ? styles.errorInput : ''}`}
+                placeholder="Confirm Password"
+                // value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+              {validationErrors.confirmPassword && (
+                <span className={styles.errorText}>{validationErrors.confirmPassword}</span>
+              )}
             </div>
 
             <button className={styles.registerbutton} disabled={registerLoading || otpLoading}>

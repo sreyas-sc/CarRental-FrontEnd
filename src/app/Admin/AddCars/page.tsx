@@ -405,7 +405,7 @@ const AddVehicle = () => {
           </tbody>
         </table>
 
-        <div className="flex justify-center mt-4">
+        {/* <div className="flex justify-center mt-4">
           {Array.from({ length: Math.ceil((filteredVehicles?.length || 0) / vehiclesPerPage) }, (_, i) => (
             <button
               key={i}
@@ -417,7 +417,19 @@ const AddVehicle = () => {
               {i + 1}
             </button>
           ))}
+        </div> */}
+        <div className={styles.pagination_container}>
+          {Array.from({ length: Math.ceil((filteredVehicles?.length || 0) / vehiclesPerPage) }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => paginate(i + 1)}
+              className={`${styles.pagination_button} ${currentPage === i + 1 ? styles.active : ""}`}
+            >
+              {i + 1}
+            </button>
+          ))}
         </div>
+
     </div>
   );
 };

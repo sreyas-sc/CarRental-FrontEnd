@@ -25,6 +25,23 @@ export const REGISTER_MUTATION = gql`
   }
 `;
 
+
+export const GET_USER_IMAGE = gql`
+  query GetUserImage($userId: ID!) {
+    getUserImage(userId: $userId)
+  }
+`;
+
+export const UPLOAD_IMAGE_MUTATION = gql`
+  mutation UploadImage($userId: ID!, $file: Upload!) {
+    uploadImage(userId: $userId, file: $file) {
+      success
+      message
+      fileUrl
+    }
+  }
+`;
+
 // To update the user details(Address, name)
 export const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser($id: ID!, $name: String, $email: String, $phone: String, $city: String, $state: String, $country: String, $imageUrl: String) {
@@ -141,15 +158,15 @@ export const ADD_BOOKING_MUTATION = gql`
 `;
 
 // Mutation to upload user profile photo
-export const UPLOAD_IMAGE_MUTATION = gql`
-  mutation UploadImage($file: Upload!, $userId: ID!) {
-    uploadImage(file: $file, userId: $userId) {
-      success
-      message
-      fileUrl
-    }
-  }
-`;
+// export const UPLOAD_IMAGE_MUTATION = gql`
+//   mutation UploadImage($file: Upload!, $userId: ID!) {
+//     uploadImage(file: $file, userId: $userId) {
+//       success
+//       message
+//       fileUrl
+//     }
+//   }
+// `;
 
 // Add new vehicle
 export const ADD_VEHICLE_MUTATION = gql`

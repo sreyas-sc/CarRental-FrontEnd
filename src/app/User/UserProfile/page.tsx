@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, ApolloError } from '@apollo/client';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { Table, Checkbox, Button, Pagination, Form, Input, Modal, Upload, Dropdown, Menu, message  } from 'antd';
-import { UserOutlined, CameraOutlined, DeleteOutlined } from '@ant-design/icons';
-import { GET_BOOKINGS_BY_USER_ID, UPDATE_USER_MUTATION, CHANGE_PASSWORD_MUTATION, UPLOAD_IMAGE_MUTATION } from '@/graphql/mutations';
+import { UserOutlined, CameraOutlined } from '@ant-design/icons';
+import { GET_BOOKINGS_BY_USER_ID, UPDATE_USER_MUTATION, CHANGE_PASSWORD_MUTATION, UPLOAD_IMAGE_MUTATION, GET_USER_IMAGE } from '@/graphql/mutations';
 import styles from './user-profile.module.css';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
@@ -58,6 +58,19 @@ const UserProfile: React.FC = () => {
   });
 
 
+  //  GET_USER_IMAGE query
+  // const { data: ImageData } = useQuery(GET_USER_IMAGE, {
+  //   variables: { userId: user?.id },
+  //   skip: !user,
+  // });
+
+  // Add GET_USER_IMAGE query with refetch functionality
+  const { data: ImageData, refetch: refetchImage } = useQuery(GET_USER_IMAGE, {
+    variables: { userId: user?.id },
+    skip: !user,
+  });
+
+
   const [updateUser] = useMutation(UPDATE_USER_MUTATION);
   const [changePassword] = useMutation(CHANGE_PASSWORD_MUTATION);
   const [uploadImage] = useMutation(UPLOAD_IMAGE_MUTATION);
@@ -103,6 +116,7 @@ const UserProfile: React.FC = () => {
           variables: { file: fileToUpload, userId: user?.id },
         });
         if (data.uploadImage.success) {
+          await refetchImage();
           setUser({ ...user, imageUrl: data.uploadImage.fileUrl });
           sessionStorage.setItem('user', JSON.stringify({ ...user, imageUrl: data.uploadImage.fileUrl }));
           message.success('Image uploaded successfully');
@@ -160,52 +174,6 @@ const UserProfile: React.FC = () => {
     XLSX.writeFile(workbook, 'user-bookings.xlsx');
   };
 
-  // const columns = [
-  //   {
-  //     title: <Checkbox onChange={e => {
-  //       setSelectedRowKeys(e.target.checked ? bookings.map(booking => booking.id) : []);
-  //     }} />,
-  //     dataIndex: 'checkbox',
-  //     render: (_: any, record: Booking) => (
-  //       <Checkbox
-  //         checked={selectedRowKeys.includes(record.id)}
-  //         onChange={() => handleRowSelectionChange(
-  //           selectedRowKeys.includes(record.id)
-  //             ? selectedRowKeys.filter(key => key !== record.id)
-  //             : [...selectedRowKeys, record.id]
-  //         )}
-  //       />
-  //     ),
-  //   },
-  //   {
-  //     title: 'Start Date',
-  //     dataIndex: 'startDate',
-  //   },
-  //   {
-  //     title: 'End Date',
-  //     dataIndex: 'endDate',
-  //   },
-  //   {
-  //     title: 'Car Model',
-  //     render: (text: any, record: Booking) => {
-  //       // Check if the vehicle is available
-  //       if (record.vehicle) {
-  //         return `${record.vehicle.make} ${record.vehicle.model}`;
-  //       } else {
-  //         return 'Vehicle Deleted'; // Return a placeholder if the vehicle is not available
-  //       }
-  //     },
-  //   },
-  //   {
-  //     title: 'Status',
-  //     dataIndex: 'status',
-  //   },
-  //   {
-  //     title: 'Total Price',
-  //     dataIndex: 'totalPrice',
-  //     render: (text: string) => `₹${text}`,
-  //   },
-  // ];
   const columns = [
     {
       title: <Checkbox onChange={e => {
@@ -350,7 +318,7 @@ const UserProfile: React.FC = () => {
         <div className={styles.avatarContainer}>
           <Dropdown overlay={avatarMenu} trigger={['click']}>
             <div className={styles.avatar}>
-              {user.imageUrl ? (
+              {/* {user.imageUrl ? (
                 <img
                   src={user.imageUrl}
                   alt={user.name}
@@ -361,7 +329,19 @@ const UserProfile: React.FC = () => {
                 />
               ) : (
                 <UserOutlined className={styles.defaultAvatarIcon} />
-              )}
+              )} */}
+              {ImageData?.getUserImage ? (
+              <img
+                src={ImageData.getUserImage}
+                alt={user.name}
+                className={styles.avatarImage}
+                onError={(e) => {
+                  e.currentTarget.src = "https://via.placeholder.com/150";
+                }}
+              />
+            ) : (
+              <UserOutlined className={styles.defaultAvatarIcon} />
+            )}
               {!user.imageUrl && (
                 <div className={styles.avatarFallback}>
                   {user.name.charAt(0).toUpperCase()}
@@ -404,7 +384,8 @@ const UserProfile: React.FC = () => {
           <Table
             className={styles.table}
             columns={columns}
-            dataSource={bookings.slice((currentPage - 1) * pageSize, currentPage * pageSize)}
+            // dataSource={bookings.slice((currentPage - 1) * pageSize, currentPage * pageSize)}
+            dataSource={[...bookings].reverse().slice((currentPage - 1) * pageSize, currentPage * pageSize)} //to sshow the table in reverse cronological order
             rowKey="id"
             pagination={false}
             locale={{ emptyText: 'No bookings available.' }}
