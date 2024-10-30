@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
-import { BiSolidHide } from "react-icons/bi";
+// import { BiSolidHide } from "react-icons/bi";
 
 const LOGIN_USER = gql`
   mutation Login($email: String!, $password: String!) {
