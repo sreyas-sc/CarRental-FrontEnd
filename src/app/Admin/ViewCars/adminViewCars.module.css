@@ -75,9 +75,9 @@
 
 .cardImage {
     width: 100%; /* Full width image */
-    height: 200px; /* Fixed height */
-    object-fit: cover;
-    
+    height: auto; /* Fixed height */
+    object-fit: contain;
+    display: block;    
 }
 
 .cardBody {

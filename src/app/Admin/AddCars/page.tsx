@@ -4,40 +4,33 @@ import styles from './add-cars.module.css';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_ALL_VEHICLES_MUTATION, ADD_VEHICLE_MUTATION } from '@/graphql/mutations';
+import { GET_ALL_MAKES_MUTATION, ADD_MANUFACTURER_MUTATION } from '@/graphql/mutations';
 import * as XLSX from 'xlsx'; // Import xlsx for reading Excel files
 
-const vehicleMakes = [
-  "Toyota", "Honda", "Ford", "Chevrolet", "Nissan", "Hyundai",
-  "Kia", "Volkswagen", "Subaru", "Mazda", "BMW", "Mercedes",
-  "Suzuki", "Koenigsegg", "Lamborghini"
-];
+// const vehicleMakes = [
+//   "Toyota", "Honda", "Ford", "Chevrolet", "Nissan", "Hyundai",
+//   "Kia", "Volkswagen", "Subaru", "Mazda", "BMW", "Mercedes",
+//   "Suzuki", "Koenigsegg", "Lamborghini"
+// ];
 
-interface Vehicle {
+interface Make {
   id: string;
   make: string;
-  model: string;
-  year: string;
 }
 
 interface VehiclesData {
-  getAllCars: Vehicle[];
+  getAllMakesQuery: Make[];
 }
 
 const AddVehicle = () => {
   const [make, setMake] = useState('');
-  const [model, setModel] = useState('');
-  const [year, setYear] = useState<string>('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [importedVehicles, setImportedVehicles] = useState<Vehicle[]>([]); // Store imported vehicles
+  const [importedVehicles, setImportedVehicles] = useState<Make[]>([]); // Store imported vehicles
 
-  const { loading, error, data, refetch } = useQuery<VehiclesData>(GET_ALL_VEHICLES_MUTATION);
-  const [addVehicle] = useMutation(ADD_VEHICLE_MUTATION);
-
+  const { loading, error, data, refetch } = useQuery<VehiclesData>(GET_ALL_MAKES_MUTATION);
+  const [addVehicle] = useMutation(ADD_MANUFACTURER_MUTATION);
     // Filter state
   const [filterMake, setFilterMake] = useState('');
-  const [filterModel, setFilterModel] = useState('');
-  const [filterYear, setFilterYear] = useState('');
 
     // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,14 +41,14 @@ const AddVehicle = () => {
     const value = e.target.value;
     setMake(value);
 
-    if (value) {
-      const filteredSuggestions = vehicleMakes.filter(make =>
-        make.toLowerCase().startsWith(value.toLowerCase())
-      );
-      setSuggestions(filteredSuggestions);
-    } else {
-      setSuggestions([]);
-    }
+    // if (value) {
+    //   const filteredSuggestions = vehicleMakes.filter(make =>
+    //     make.toLowerCase().startsWith(value.toLowerCase())
+    //   );
+    //   setSuggestions(filteredSuggestions);
+    // } else {
+    //   setSuggestions([]);
+    // }
   };
 
   const handleSuggestionClick = (suggestion: string) => {
@@ -63,13 +56,12 @@ const AddVehicle = () => {
     setSuggestions([]);
   };
 
-  const filteredVehicles = data?.getAllCars.filter(vehicle => {
-        return (
-          (filterMake ? vehicle.make.toLowerCase().includes(filterMake.toLowerCase()) : true) &&
-          (filterModel ? vehicle.model.toLowerCase().includes(filterModel.toLowerCase()) : true) &&
-          (filterYear ? vehicle.year.includes(filterYear) : true)
-        );
-      });
+  const filteredVehicles = data?.getAllMakesQuery?.filter(vehicle => {
+    return (
+        filterMake ? vehicle.make.toLowerCase().includes(filterMake.toLowerCase()) : true
+    );
+});
+
     
   const indexOfLastVehicle = currentPage * vehiclesPerPage;
   const indexOfFirstVehicle = indexOfLastVehicle - vehiclesPerPage;
@@ -77,57 +69,18 @@ const AddVehicle = () => {
     
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-
-  // const handleAddVehicle = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   try {
-  //     await addVehicle({
-  //       variables: { make, model, year },
-  //       update: (cache, { data: { addVehicle } }) => {
-  //         const cachedData = cache.readQuery<VehiclesData>({ query: GET_ALL_VEHICLES_MUTATION });
-  //         if (cachedData) {
-  //           const { getAllCars } = cachedData;
-  //           cache.writeQuery({
-  //             query: GET_ALL_VEHICLES_MUTATION,
-  //             data: { getAllCars: [...getAllCars, addVehicle] },
-  //           });
-  //         }
-  //       },
-  //     });
-
-  //     Swal.fire({
-  //       icon: 'success',
-  //       title: 'Success',
-  //       text: 'Vehicle added successfully!',
-  //       confirmButtonText: 'OK'
-  //     });
-
-  //     setMake('');
-  //     setModel('');
-  //     setYear('');
-  //     refetch();
-  //   } catch (err) {
-  //     console.error(err);
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Error',
-  //       text: 'Failed to add vehicle',
-  //       confirmButtonText: 'Try Again'
-  //     });
-  //   }
-  // };
   const handleAddVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await addVehicle({
-        variables: { make, model, year },
+        variables: { make },
         update: (cache, { data: { addVehicle } }) => {
-          const cachedData = cache.readQuery<VehiclesData>({ query: GET_ALL_VEHICLES_MUTATION });
+          const cachedData = cache.readQuery<VehiclesData>({ query: GET_ALL_MAKES_MUTATION });
           if (cachedData) {
-            const { getAllCars } = cachedData;
+            const { getAllMakesQuery } = cachedData;
             cache.writeQuery({
-              query: GET_ALL_VEHICLES_MUTATION,
-              data: { getAllCars: [...getAllCars, addVehicle] },
+              query: GET_ALL_MAKES_MUTATION,
+              data: { getAllCars: [...getAllMakesQuery, addVehicle] },
             });
           }
         },
@@ -141,8 +94,6 @@ const AddVehicle = () => {
       });
 
       setMake('');
-      setModel('');
-      setYear('');
       refetch();
     } catch (err) {
       const error = err as any;
@@ -201,7 +152,7 @@ const AddVehicle = () => {
           const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
           // Map the parsed data into Vehicle format
-          const vehicleData: Vehicle[] = jsonData.map((row: any) => ({
+          const vehicleData: Make[] = jsonData.map((row: any) => ({
             id: '', // Placeholder ID since it's not present in the imported data
             make: row['Make'],
             model: row['Model'],
@@ -217,9 +168,9 @@ const AddVehicle = () => {
 
   const handleBulkAddVehicles = async () => {
     try {
-      for (const vehicle of importedVehicles) {
+      for (const Make of importedVehicles) {
         await addVehicle({
-          variables: { make: vehicle.make, model: vehicle.model, year: vehicle.year },
+          variables: { make: Make.make},
         });
       }
       refetch();
@@ -270,8 +221,8 @@ const AddVehicle = () => {
             </ul>
           )}
         </div>
-        <div><input type="text" name="vehicleModel" placeholder="Model" className={styles.inputfields} value={model} onChange={(e) => setModel(e.target.value)} /></div>
-        <div><input type="text" name="vehicleYear" placeholder="Year" className={styles.inputfields} value={year} onChange={(e) => setYear(e.target.value)} /></div>
+        {/* <div><input type="text" name="vehicleModel" placeholder="Model" className={styles.inputfields} value={model} onChange={(e) => setModel(e.target.value)} /></div>
+        <div><input type="text" name="vehicleYear" placeholder="Year" className={styles.inputfields} value={year} onChange={(e) => setYear(e.target.value)} /></div> */}
 
         <button className={styles.submitButton} type="submit">
           <span className={styles.circle1}></span>
@@ -279,7 +230,7 @@ const AddVehicle = () => {
           <span className={styles.circle3}></span>
           <span className={styles.circle4}></span>
           <span className={styles.circle5}></span>
-          <span className={styles.text}>Add Car</span>
+          <span className={styles.text}>Add Car Make</span>
       </button>
       </form>
 
@@ -327,16 +278,16 @@ const AddVehicle = () => {
             <thead>
               <tr>
                 <th className="px-4 py-2">Make</th>
-                <th className="px-4 py-2">Model</th>
-                <th className="px-4 py-2">Year</th>
+                {/* <th className="px-4 py-2">Model</th>
+                <th className="px-4 py-2">Year</th> */}
               </tr>
             </thead>
             <tbody>
               {importedVehicles.map((vehicle, index) => (
                 <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : ""}>
                   <td className="border px-4 py-2">{vehicle.make}</td>
-                  <td className="border px-4 py-2">{vehicle.model}</td>
-                  <td className="border px-4 py-2">{vehicle.year}</td>
+                  {/* <td className="border px-4 py-2">{vehicle.model}</td>
+                  <td className="border px-4 py-2">{vehicle.year}</td> */}
                 </tr>
               ))}
             </tbody>
@@ -363,20 +314,6 @@ const AddVehicle = () => {
           onChange={(e) => setFilterMake(e.target.value)}
           className={styles.filterfields}
         />
-        <input
-          type="text"
-          placeholder="Filter by Model"
-          value={filterModel}
-          onChange={(e) => setFilterModel(e.target.value)}
-          className={styles.filterfields}
-        />
-        <input
-          type="number"
-          placeholder="Filter by Year"
-          value={filterYear}
-          onChange={(e) => setFilterYear(e.target.value)}
-          className={styles.filterfields}
-        />
       </div>
 
      
@@ -384,17 +321,15 @@ const AddVehicle = () => {
           <thead>
             <tr>
               <th >Make</th>
-              <th >Model</th>
-              <th>Year</th>
+              {/* <th >Model</th>
+              <th>Year</th> */}
             </tr>
           </thead>
           <tbody>
             {currentVehicles?.length ? (
-              currentVehicles.map((vehicle: Vehicle) => (
+              currentVehicles.map((vehicle: Make) => (
                 <tr key={vehicle.id} className={currentVehicles.indexOf(vehicle) % 2 === 0 ? "bg-gray-100" : ""}>
                   <td className="border px-4 py-2">{vehicle.make}</td>
-                  <td className="border px-4 py-2">{vehicle.model}</td>
-                  <td className="border px-4 py-2">{vehicle.year}</td>
                 </tr>
               ))
             ) : (
@@ -405,19 +340,7 @@ const AddVehicle = () => {
           </tbody>
         </table>
 
-        {/* <div className="flex justify-center mt-4">
-          {Array.from({ length: Math.ceil((filteredVehicles?.length || 0) / vehiclesPerPage) }, (_, i) => (
-            <button
-              key={i}
-              onClick={() => paginate(i + 1)}
-              className={`mx-1 px-3 py-1 rounded ${
-                currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
-              }`}
-            >
-              {i + 1}
-            </button>
-          ))}
-        </div> */}
+        
         <div className={styles.pagination_container}>
           {Array.from({ length: Math.ceil((filteredVehicles?.length || 0) / vehiclesPerPage) }, (_, i) => (
             <button
@@ -443,16 +366,3 @@ const AddVehiclePage = () => {
 };
 
 export default AddVehiclePage;
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -42,11 +42,11 @@ const LoginAdmin = () => {
       });
     } catch (err) {
       console.error(err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Login Failed',
-        text: error?.message || 'Check Login Credentials again',
-      });
+      // Swal.fire({
+      //   icon: 'error',
+      //   title: 'Login Failed',
+      //   text: error?.message || 'Check Login Credentials again',
+      // });
     }
   };
 
@@ -63,7 +63,7 @@ const LoginAdmin = () => {
           />
         </div>
         <span className={styles.logintext}>Administrator Login</span>
-        <form className={styles.inputfields} onSubmit={handleLogin}>
+        <form className={styles.inputfields} onSubmit={handleLogin} noValidate>
           <input
             type="email"
             className={styles.emailinput}
@@ -71,6 +71,7 @@ const LoginAdmin = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            onInvalid={(e) => e.preventDefault()}
           />
           <div className={styles.passwordinputcontainer}> {/* Container for password field and icon */}
             <input

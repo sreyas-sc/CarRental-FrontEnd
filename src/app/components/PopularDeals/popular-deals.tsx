@@ -44,6 +44,7 @@ const PopularDeals: React.FC = () => {
           <div className={styles.carcard} key={vehicle.id}>
             <div className={styles.cardcarimagecontainer}>
               <img
+                className={styles.cardcarimage}
                 src={vehicle.primaryImageUrl || 'https://via.placeholder.com/300x200'}
                 alt={`${vehicle.make} ${vehicle.model}`}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}

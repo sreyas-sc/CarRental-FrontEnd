@@ -295,6 +295,25 @@ export const GET_ALL_MAKES = gql`
   }
 `;
 
+export const GET_ALL_MAKES_MUTATION = gql`
+  query GetAllMakesQuery {
+    getAllMakesQuery {
+      id
+      make
+    }
+  }
+`;
+
+export const ADD_MANUFACTURER_MUTATION = gql`
+  mutation AddManufacturer($make: String!) {
+    addManufacturer(make: $make) {
+      id
+      make
+    }
+  }
+`;
+
+
 // Get the model and make of the car
 export const GET_MODELS_BY_MAKE = gql`
   query GetModelsByMake($make: String!) {
